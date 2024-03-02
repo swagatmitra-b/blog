@@ -1,0 +1,34 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      p {
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body class="leading-8 text-xl text-left break-words">
+    <Header />
+    <main class="text-gray-500 mt-10 md:w-1/2 mx-auto p-16 px-7">
+      <p>Hey, I'm Swagatmitra. This is my blog. You're welcome to wander.</p>
+      <p>
+        You can find me on <a
+          href="https://www.github.com/swagatmitra-b"
+          target="_blank"
+          class="hover:text-white text-pink-600">GitHub</a
+        > and
+        <a
+          href="https://www.twitter.com/swagatmitra"
+          target="_blank"
+          class="hover:text-white text-pink-600">Twitter</a
+        >.
+      </p>
+    </main>
+  </body>
+</html>

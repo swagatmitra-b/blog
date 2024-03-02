@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, description, pubDate, words } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <Header position="fixed" />
+    <main class="flex w-full mx-auto justify-center">
+      <article class="md:w-3/5 md:mt-20 mt-24 w-11/12 overflow-x-hidden">
+        <div class="mx-auto md:p-10">
+          <div class="md:leading-4 text-center md:py-5 mb-5">
+            <h1 class="md:text-[2.5rem] text-white text-[2rem] leading-8">
+              {title}
+            </h1>
+            <div
+              class="flex text-baseGray divide-x-2 divide-baseGray gap-2 justify-center m-4 text-md md:text-xl"
+            >
+              <FormattedDate date={pubDate} />
+              <span class="pl-2">
+                {words} words
+              </span>
+            </div>
+            <hr />
+          </div>
+          <div class="text-gray-300 md:text-[1.25rem] text-[0.97rem]">
+            <slot />
+          </div>
+        </div>
+      </article>
+    </main>
+    <style is:global>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      ::-webkit-scrollbar {
+        width: 0.8rem;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: rgb(var(--gray-dark));
+      }
+      :root {
+        --gray-dark: 34, 41, 57;
+        --astro-code-color-text: #dee1e6;
+        --astro-code-color-background: #060606;
+        --astro-code-token-constant: #d466e9;
+        --astro-code-token-string: #56966e;
+        --astro-code-token-comment: #485263;
+        --astro-code-token-keyword: #c14d53;
+        --astro-code-token-parameter: #c14d53;
+        --astro-code-token-function: #6a9f98;
+        --astro-code-token-string-expression: #56966e;
+        --astro-code-token-punctuation: #dee1e6;
+        --astro-code-token-link: #dee1e6;
+      }
+    </style>
+  </body>
+</html>

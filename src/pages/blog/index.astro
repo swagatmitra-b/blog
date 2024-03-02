@@ -1,0 +1,65 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+import FormattedDate from "../../components/FormattedDate.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      li {
+        list-style: none;
+      }
+      ul {
+        padding: 0;
+      }
+      p {
+        margin: 0rem;
+      }
+    </style></head
+  >
+
+  <body class="leading-8 text-xl text-left break-words">
+    <Header />
+    <main class="md:w-1/2 text-gray-500 md:mt-9 mx-auto p-4 px-7">
+      <section class="mt-10">
+        <ul class="flex flex-col flex-wrap gap-9">
+          {
+            posts.map((post) => (
+              <li>
+                <a href={`/blog/${post.slug}/`}>
+                  <h4 class="text-gray-200 hover:text-slate-400 transition-all duration-75 ease-in text-3xl">
+                    {post.data.title}
+                  </h4>
+                  <div class="flex gap-4 text-[1rem] items-center">
+                    <p class="text-baseGray">
+                      <FormattedDate date={post.data.pubDate} />
+                    </p>
+                    {post.data.tags.map((tag) => (
+                      <span class="flex gap-1 items-center">
+                        <p class="text-xl text-baseGray">/</p>
+                        <p class=" text-pink-600">{tag}</p>
+                        <p class="text-xl text-baseGray">/</p>
+                      </span>
+                    ))}
+                  </div>
+                  <h4 class="text-[1.2rem] text-gray-500">
+                    {post.data.description}
+                  </h4>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
