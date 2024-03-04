@@ -84,6 +84,7 @@ pre > code {
 blockquote {
   border-left: 4px solid rgb(var(--hot-pink));
   padding: 0 1rem;
+  color: lightcoral;
 }
 ul {
   list-style: disc;
@@ -92,6 +93,9 @@ ul {
 ol {
   padding: 1rem 2rem;
   list-style: decimal;
+}
+li::marker {
+  color: lightcoral;
 }
 @media (max-width: 720px) {
   body {
