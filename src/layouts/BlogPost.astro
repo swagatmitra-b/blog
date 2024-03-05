@@ -11,7 +11,9 @@ const { title, description, pubDate, words } = Astro.props;
 
 <script>
   const anchorTags = document.querySelectorAll(".content a");
-  anchorTags.forEach((tag) => tag.setAttribute("target", "_blank"));
+  anchorTags.forEach((tag) => {
+    if (!tag.getAttribute("href")?.startsWith("#"))tag.setAttribute("target", "_blank");
+  });
 </script>
 
 <html lang="en">
