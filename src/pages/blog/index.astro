@@ -43,13 +43,15 @@ const posts = (await getCollection("blog")).sort(
                     <p class="text-baseGray">
                       <FormattedDate date={post.data.pubDate} />
                     </p>
-                    {post.data.tags.map((tag) => (
-                      <span class="flex gap-1 items-center">
-                        <p class="text-xl text-baseGray">/</p>
-                        <p class=" text-pink-600">{tag}</p>
-                        <p class="text-xl text-baseGray">/</p>
-                      </span>
-                    ))}
+                    <div class="flex">
+                      {post.data.tags.map((tag) => (
+                        <span class="flex gap-1 items-center">
+                          <p class="text-xl text-baseGray">/</p>
+                          <p class=" text-pink-600">{tag}</p>
+                          <p class="text-xl text-baseGray">/</p>
+                        </span>
+                      ))}
+                    </div>
                   </div>
                   <h4 class="text-[1.2rem] text-gray-500">
                     {post.data.description}
