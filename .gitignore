@@ -3,6 +3,8 @@ dist/
 # generated types
 .astro/
 
+src/content/cooking
+
 # dependencies
 node_modules/
 
