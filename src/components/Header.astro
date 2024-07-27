@@ -3,12 +3,17 @@ import { SITE_TITLE } from "../consts";
 
 const { position } = Astro.props;
 const { pathname } = Astro.url;
+
+const onBlogPage = pathname.split("/").filter((c) => c);
+console.log(onBlogPage);
 ---
 
 <header
-  class={`px-4 py-2 text-white w-full ${position ? `${position} bg-black md:bg-transparent` : ""}`}
+  class={` ${onBlogPage.length != 1 ? "px-4 py-2" : "px-8 md:-my-3 py-6 md:py-0"} text-white w-full ${position ? `${position} bg-black md:bg-transparent` : ""}`}
 >
-  <nav class="flex items-center justify-between p-4">
+  <nav
+    class={`flex items-center justify-between ${onBlogPage.length != 1 ? "p-4" : ""}`}
+  >
     <h2 class="m-0 text-[1.3rem]">
       <a href="/" class="text-gray-200 hover:text-gray-200">{SITE_TITLE}</a>
     </h2>
