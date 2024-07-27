@@ -1,42 +1,39 @@
 ---
 title: Rediscovering TypeScript
-description: I thought Connect 4 in TS was BS. 
+description: I thought Connect 4 in TS was BS.
 pubDate: June 03 2024
 tags: [Programming]
-words: ''
+words: ""
 ---
 
 About midway through 2023, I had become thoroughly annoyed with TypeScript in my projects. There was simply
-no end to the errors that would pop up on my editor whenever I opened a *.ts* file. And more often than not, I ended
+no end to the errors that would pop up on my editor whenever I opened a _.ts_ file. And more often than not, I ended
 up manually asserting types to resolve them, which virtually defeated the purpose of using TypeScript in the
-first place. But as with most things, there was nobody to blame but myself.  
+first place. But as with most things, there was nobody to blame but myself.
 
 About a week ago, I stumbled upon a blog post which tried to explain the solution of a problem from the [Advent of TypeScript challenge](https://typehero.dev/challenge/day-23).
-The "goal of the challenge" was to implement the game of Connect 4 in TypeScript ... and TypeScript only. Which 
+The "goal of the challenge" was to implement the game of Connect 4 in TypeScript and TypeScript only. Which
 meant that everything (any and all logic) was to be represented as types. This is the part where my brain,
 like any other brain that considers TypeScript insufferable, imploded. Even though I still do not
-understand much of it, I made it a point to appreciate the Turing Completeness of TypeScript's type system 
+understand much of it, I made it a point to appreciate the Turing Completeness of TypeScript's type system
 and the magic of compilers.
 
 Hence, this is a gentle introduction to the nitty-gritty parts of TS that I've learned since then to rescue
 myself from a barrage of squiggly red lines.
 
-> Although I will review fundamentals whenever necessary, this is not a TypeScript tutorial! I 
-> assume you have basic familiarity with TypeScript.
+> Although I will review fundamentals whenever necessary, I assume you have basic familiarity with TypeScript.
 
 ### Generics and Conditional Types
 
-Generics are an ingenious concept in modern programming languages that help in creating flexible data types. 
-Strongly typed languages like Rust and TypeScript make use of generics to help increase their tolerence of 
-dynamic types generated during runtime while maintaining type-safety. This is made possible with the help of 
+Generics are an ingenious concept in modern programming languages that help in creating flexible data types.
+Strongly typed languages like Rust and TypeScript make use of generics to help increase their tolerence of
+dynamic types generated during runtime while maintaining type-safety. This is made possible with the help of
 constraints introduced around the type arguments. The compiler is also able to infer most types at runtime.
 
 ```typescript
-
 function getCredentials<T>(password: T): T {
-    return password
-} 
-
+  return password;
+}
 ```
 
 This function does not have any constraints around the type T. Thus, it can accept any type without throwing an
@@ -45,8 +42,8 @@ error. It accepts arguments of any type and expects to return a value of the sam
 ```typescript
 const getCredentials = <T>(password: T extends string | number): T => password
 
-getCredentials("ilovets") 
-getCredentials(054321) 
+getCredentials("ilovets")
+getCredentials(054321)
 getCredentials(false) // error
 
 ```
@@ -57,105 +54,100 @@ words, the type T must also be of type `(string | number)`. To understand this i
 the following example.
 
 ```typescript
-
 type Student = {
-    name: string, 
-    age: number, 
-    specialities: string[]
-} // type-alias
+  name: string;
+  age: number;
+  specialities: string[];
+}; // type-alias
 
 const student1: Student = {
-    name: "swagatmitra", 
-    age: 20,
-    specialities: ["crazy guitar skills"]
+  name: "swagatmitra",
+  age: 20,
+  specialities: ["crazy guitar skills"],
+};
+
+function studentInfo<T extends Student, P extends keyof T>(
+  student: T,
+  extra: P
+): string {
+  return `The student's name is ${student.name} and his ${String(
+    extra
+  )} is/are ${student[extra]}`;
 }
 
-function studentInfo<T extends Student, P extends keyof T>(student: T, extra: P): string {
-    return `The student's name is ${student.name} and his ${String(extra)} is/are ${student[extra]}`
-}
-
-studentInfo(student1, "specialities") 
-studentInfo(student1, "hobbies") // error
-studentInfo("swagatmitra", "age") // error
-
+studentInfo(student1, "specialities");
+studentInfo(student1, "hobbies"); // error
+studentInfo("swagatmitra", "age"); // error
 ```
 
 The generic function now receives two type parameters, T and P. The type T is now constrained to be of type
-`Student` while the P type has to be one of the properties of the T type. For a quick review, the `keyof` keyword 
+`Student` while the P type has to be one of the properties of the T type. For a quick review, the `keyof` keyword
 creates a `Union` of all keys in an object type. For instance,
 
 ```typescript
-
-type args = keyof Student // "name" | "age" | specialities
-
+type args = keyof Student; // "name" | "age" | specialities
 ```
 
-Please note the distinction between *types* and *values* in TypeScript. This is an extremely common pitfall
-encountered by beginners. Generics only accept *types* and not *values*, like most other operations in TypeScript
+Please note the distinction between _types_ and _values_ in TypeScript. This is an extremely common pitfall
+encountered by beginners. Generics only accept _types_ and not _values_, like most other operations in TypeScript
 land. If we had to use a JavaScript value instead of a type,
 
 ```typescript
-
-type args = keyof typeof student1
-
+type args = keyof typeof student1;
 ```
 
-since `typeof` extracts the type of the value, as inferred by the compiler. 
+since `typeof` extracts the type of the value, as inferred by the compiler.
 
 On a similar note, if we had to performing the same check on an array (whether a value exists in an array), it
 would require the application of trickier TypeScript knowledge.
 
 ```typescript
+const specialities = ["crazy guitar skills", "good programmer"] as const;
 
-const specialities = ["crazy guitar skills", "good programmer"] as const
-
-function studentInfo<T extends Student, P extends (typeof specialities)[number]>(student: T, speciality: P): string {
-    return `The student's name is ${student.name} and his speciality is ${speciality}`
+function studentInfo<
+  T extends Student,
+  P extends (typeof specialities)[number]
+>(student: T, speciality: P): string {
+  return `The student's name is ${student.name} and his speciality is ${speciality}`;
 }
 
-studentInfo(student1, "good programmer") 
-studentInfo(student1, "great programmer") // error
-
+studentInfo(student1, "good programmer");
+studentInfo(student1, "great programmer"); // error
 ```
 
 The is important to note the `as const` following the specialities array. For the sake of demonstration
-(as you will see why), I am considering a fresh array instead of the array present in `student1`. 
+(as you will see why), I am considering a fresh array instead of the array present in `student1`.
 The `as const` phrase transforms the `specialities` array from `string[]` to a tuple of string literals. The
 exact value of each element will be assigned as its type.
 
 > `as const` converts the value into a type literally. Hence, TypeScript will only check for the exact
-value for a type or throw an error otherwise.
+> value for a type or throw an error otherwise.
 
 Finally, `(typeof specialities)[number]` or in general, `arrayType[number]` syntax is used to create a union
 type of all elements in the array. Again, the type-checking will not work if the type of the array is a regular
 `string[]` and not a literal type since `(typeof specialities)[number]` will not
 be a union of the values present in the array.
 
-```typescript 
-
+```typescript
 const a = ["hello", 2, "the world"];
 
-type check1 = (typeof a)[number] // string | number
+type check1 = (typeof a)[number]; // string | number
 
 const b = ["hello", 2, "the world"] as const;
 
-type check2 = (typeof b)[number] // "hello" | 2 | "the world"
-
-
+type check2 = (typeof b)[number]; // "hello" | 2 | "the world"
 ```
 
 We can use conditional checks using the ternary operator to create more complex types with logic.
 The `never` type is often useful while building conditionals as it allows us to enforce
-that all possible types have been accounted for. You can think of the `never` type as the null set (from set theory). 
+that all possible types have been accounted for. You can think of the `never` type as the null set (from set theory).
 In TypeScript land, it signifies a value that cannot exist. Hence, it is used to remove or discard certain types
 that do not match our condition. The following example demonstrates this.
 
 ```typescript
+type filter<T, P> = T extends keyof P ? T : never;
 
-type filter<T, P> = T extends keyof P ? T : never
-
-type check1 = filter<"age" | "name" | "degree" | "gpa", Student> // "age" | "name"
-
+type check1 = filter<"age" | "name" | "degree" | "gpa", Student>; // "age" | "name"
 ```
 
 This brings us to our next topic.
@@ -163,18 +155,17 @@ This brings us to our next topic.
 ### Mapped Types
 
 Mapped types are used to manipulate existing object types. The `in` keyword helps iterate through the keys
-of the target type. To understand this better, let's say we want to extract the key-value pairs in *Student* 
+of the target type. To understand this better, let's say we want to extract the key-value pairs in _Student_
 without string values.
 
 ```typescript
-
 type Mapped<T> = {
-    [K in keyof T]: T[K] extends string ? never : K
-}
+  [K in keyof T]: T[K] extends string ? never : K;
+};
 
 // type StudentMapped = Mapped<Student>
 // {
-//     name: never, 
+//     name: never,
 //     age: "age",
 //     specialities: "specialities"
 // }
@@ -182,86 +173,80 @@ type Mapped<T> = {
 
 The `[K in keyof T]` syntax loops through the object type T with its keys being assigned the type parameter K
 each iteration. And much like regular JavaScript object indexing, the `T[K]` signifies the type of the value
-associated with the key K. 
+associated with the key K.
 
 ```typescript
-type ExtractKeys<T> = Mapped<T>[keyof T] 
+type ExtractKeys<T> = Mapped<T>[keyof T];
 
 // type StudentExtractKeys = ExtractKeys<Student> // "age" | "specialities"
 ```
 
-In the `ExtractKeys` type, we are creating a union of the keys without `never` values in the previously built 
-mapped type. The `[keyof T]` is used to index and extract keys which do not have a `never` type as a value, 
-in this case, the keys without `string` types.  
+In the `ExtractKeys` type, we are creating a union of the keys without `never` values in the previously built
+mapped type. The `[keyof T]` is used to index and extract keys which do not have a `never` type as a value,
+in this case, the keys without `string` types.
 
 ```typescript
 type FinalType<T> = {
-    [K in ExtractKeys<T>]: T[K]
-}
+  [K in ExtractKeys<T>]: T[K];
+};
 
-type NoString = FinalType<Student> 
+type NoString = FinalType<Student>;
 
 // {
 //     age: number,
 //     specialities: string[]
 // }
-
 ```
 
-The `FinalType` is a mapped type of all the values present in the `ExtractKeys` generic as keys with their 
-corresponding values in type T.  
-
+The `FinalType` is a mapped type of all the values present in the `ExtractKeys` generic as keys with their
+corresponding values in type T.
 
 ### Infer
 
-The `infer` keyword is used to isolate a type inside a conditional for later use. A classic example of the 
-infer is present in the in-built ReturnType utility type provided by TypeScript. 
+The `infer` keyword is used to isolate a type inside a conditional for later use. A classic example of the
+infer is present in the in-built ReturnType utility type provided by TypeScript.
 
 ```typescript
-
 function helper(a: number, b: string) {
-    return a + b
+  return a + b;
 }
 
-type CustomReturnType<T> = T extends (...args: any[]) => infer R ? R : never
+type CustomReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
 
-type checkReturnType = CustomReturnType<typeof helper> // string
-
+type checkReturnType = CustomReturnType<typeof helper>; // string
 ```
 
 The `(...args: any[]) => infer R ? R : never` syntax checks whether the type T is a function, and if it is,
-we isolate the return type of the function using `infer R` and use it accordingly in our conditional branch. 
+we isolate the return type of the function using `infer R` and use it accordingly in our conditional branch.
 It is important to note that the `infer` declarations are only allowed in the extends clause of the conditional.
 Similarly, we can use it to get the type of arguments passed into a function.
 
 ```typescript
-
-type CustomArgType<T> = T extends (...args: infer R) => any ? R : never 
-
+type CustomArgType<T> = T extends (...args: infer R) => any ? R : never;
 ```
+
 Here is another cool example using infer.
 
 ```typescript
-
 const student1 = {
-    name: "swagatmitra", 
-    age: 20,
-    specialities: ["crazy guitar skills"]
-} as const
+  name: "swagatmitra",
+  age: 20,
+  specialities: ["crazy guitar skills"],
+} as const;
 
 type InferPrefix<T> = {
-    [K in keyof T]: T[K] extends `${infer R}atmitra` ? R : never
-}
+  [K in keyof T]: T[K] extends `${infer R}atmitra` ? R : never;
+};
 
-type checkInferPrefix = InferPrefix<typeof student1>[keyof typeof student1] // swag
+type checkInferPrefix = InferPrefix<typeof student1>[keyof typeof student1]; // swag
 ```
 
 ### Conclusion
 
-Advanced TypeScript can be an utter mess to deal with. When recursive types and complex chained conditionals 
+Advanced TypeScript can be an utter mess to deal with. When recursive types and complex chained conditionals
 make you want to pull your hair out, know that it is not worth screwing your head over when you can
 always settle for JSDoc or write a web server in plain C. But I hope this helps you in deciphering some of the
-mess inside TypeScript libraries if you ever plan on building one of your own. 
+mess inside TypeScript libraries if you ever plan on building one of your own.
 Here are a few resources I've found helpful.
 
 - [TypeScript Docs](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
