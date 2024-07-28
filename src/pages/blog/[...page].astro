@@ -4,10 +4,32 @@ import Header from "../../components/Header.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
+import type { CollectionEntry } from "astro:content";
+import Paginate from "../../components/Paginate.astro";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+export async function getStaticPaths({ paginate }: { paginate: any }) {
+  const posts = (await getCollection("blog")).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+
+  return paginate(posts, { pageSize: 6 });
+}
+
+const { page } = Astro.props;
+
+type Props = {
+  page: {
+    lastPage: number;
+    data: CollectionEntry<"blog">[];
+    url: {
+      current: string;
+      next: string | undefined;
+      prev: string | undefined;
+    };
+  };
+};
+
+console.log(page);
 ---
 
 <!doctype html>
@@ -33,7 +55,7 @@ const posts = (await getCollection("blog")).sort(
       <section class="mt-[7.3rem]">
         <ul class="flex flex-col flex-wrap gap-10">
           {
-            posts.map((post) => (
+            page.data.map((post) => (
               <li>
                 <a href={`/blog/${post.slug}/`}>
                   <h4 class="text-gray-200 hover:text-slate-400 transition-all duration-75 ease-in text-3xl">
@@ -62,6 +84,13 @@ const posts = (await getCollection("blog")).sort(
           }
         </ul>
       </section>
+      <div class="flex justify-center h-0 bg-red-500 mt-16">
+        <Paginate
+          prev={page.url.prev}
+          next={page.url.next}
+          last={page.lastPage}
+        />
+      </div>
     </main>
   </body>
 </html>
