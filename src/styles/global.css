@@ -61,6 +61,7 @@ a {
   color: rgb(var(--hot-pink));
 }
 a:hover {
+  cursor: pointer;
   color: var(--gray-light);
 }
 p {
