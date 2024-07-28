@@ -100,8 +100,8 @@ These c-moves require a second argument as their target character.
 (c-move)(character)
 ```
 
-For example, `ti` moves the cursor forward to the position before the first occurence of the character `i` in the
-current line. Similarly, `Fg` moves the cursor backwards to the position of the first occurence of the character
+For example, `ti` moves the cursor forward to the position before the first occurrence of the character `i` in the
+current line. Similarly, `Fg` moves the cursor backwards to the position of the first occurrence of the character
 `g` in the current line.
 
 #### Nouns and Verbs
@@ -149,10 +149,10 @@ _C-moves_ help create more precise motions. They can be implemented in the follo
 (verb){count}(c-move)(character)
 ```
 
-- `dt.` delete everything from current cursor postition till the first occurence of a `.`
-- `vfo` select everything from current cursor position to the first occurence of a `o`
-- `yF-` copy/yank everything _backwards_ from current cursor position to the first occurence of a `-`
-- `d3fy` delete everything from current cursor postition till the first 3 occurences of `y`
+- `dt.` delete everything from current cursor position till the first occurrence of a `.`
+- `vfo` select everything from current cursor position to the first occurrence of a `o`
+- `yF-` copy/yank everything _backwards_ from current cursor position to the first occurrence of a `-`
+- `d3fy` delete everything from current cursor position till the first 3 occurrences of `y`
 
 Nouns do not produce motions with verbs. This is because nouns are a little
 special and require the addition of, what I like to call a wrap-specifier, to help define our motion accurately.
@@ -199,7 +199,7 @@ the key we want to map our macro to. Once we execute that, we will notice
 on the command line of our editor. From this point onwards, every keystroke we make will be recorded as a
 macro-move till we press the `q` key again to end the recording. To utilize or call this macro, we need to
 press the `@` key followed by the key we mapped our macro to, in our case `e`. This will modify the document
-from our current cursor postition in the order of the recorded keystrokes.
+from our current cursor position in the order of the recorded keystrokes.
 
 ### Tricks
 
@@ -221,7 +221,7 @@ Here are probably my top 10 favourite motions, in no particular order.
 5. Nobody likes using `d$` to delete from the current cursor position till the end of line. Instead, use
    `D`
 
-6. `bi` to insert infront of the current word and `ea` to insert behind it. Priceless moves.
+6. `bi` to insert in front of the current word and `ea` to insert behind it. Priceless moves.
 
 7. To replace a character without having to go to insert mode, press `r` over the character you want
    to replace followed by the new character.

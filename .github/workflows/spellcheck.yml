@@ -22,5 +22,5 @@ jobs:
         run: pip install codespell
 
       - name: Run codespell
-        run: codespell --skip="*.html, *.astro, *.ts, *js"
+        run: codespell --ignore-words-list=fro,sais --skip="*.html, *.astro, *.ts, *js, *.json"
         # run: codespell --ignore-words-list=hte --skip="*.html"
