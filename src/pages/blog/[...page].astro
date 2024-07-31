@@ -12,7 +12,7 @@ export async function getStaticPaths({ paginate }: { paginate: any }) {
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
 
-  return paginate(posts, { pageSize: 6 });
+  return paginate(posts, { pageSize: 5 });
 }
 
 const { page } = Astro.props;
@@ -66,7 +66,7 @@ console.log(page);
                       <FormattedDate date={post.data.pubDate} />
                     </p>
                     <div class="flex">
-                      {post.data.tags.map((tag) => (
+                      {post.data.tags.map((tag: string) => (
                         <span class="flex gap-1 items-center">
                           <p class="text-xl text-baseGray">/</p>
                           <p class=" text-pink-600">{tag}</p>

@@ -1,8 +1,8 @@
 ---
 title: The Git you need to know
 description: Not the 10,000th Git guide in the universe.
-pubDate: Aug 03 2024
-tags: [Git]
+pubDate: Aug 01 2024
+tags: [Programming]
 words: ""
 ---
 
@@ -163,7 +163,7 @@ pick 8adcc0a commit4
 ```
 
 The commits after the commit associated with ID `dfdf79f` (in this case, the first commit) are chosen and
-sorted in their order of occurence, with the lastest commit being at the bottom.
+sorted in their order of occurrence, with the latest commit being at the bottom.
 
 `pick` is the default action for interactive rebase. All commits are set to `pick` as the rebase consider
 every commit. To squash commits 2 and 3 together into a single commit, we can change the `pick` to `squash`
@@ -236,10 +236,10 @@ git stash
 ```
 
 - `git stash list` - Displays a list of all stashes. (You can have multiple stashes) It
-  is usually followed by the index `stash@{number}`. The lastest stash has the index of 0.
+  is usually followed by the index `stash@{number}`. The latest stash has the index of 0.
 
 - `git stash apply <stash-index>` - Applies the specified stash to the workspace. If the index is not
-  specified, the lastest stash is applied.
+  specified, the latest stash is applied.
 
 - `git stash pop <stash-index>` - Works similarly to apply except that it removes the stash from the
   stash list.
@@ -260,7 +260,7 @@ git checkout <commit-hash>
 ```
 
 On a detached state, any changes made to the workspace is not registered in any branch since there are no
-branch labels associated with the commit. Instead, the changes can be commited and then accessed later by saving
+branch labels associated with the commit. Instead, the changes can be committed and then accessed later by saving
 them in a new branch.
 
 ```
@@ -305,7 +305,7 @@ states, hence creating a merge conflict. The same flags from rebase can be used 
 accordingly.
 
 Another significant variation between the two is how they reflect the changes to particular commit.
-Let's take an example
+Let's take an example.
 
 ```
 (on: main)
@@ -324,7 +324,7 @@ If we enter
 git reset --hard 9cc7ad0
 ```
 
-the workspace (and HEAD pointer) will be brought back to the state after second commit, which is commit2.
+the workspace (and HEAD pointer) will be brought back to the state _after_ second commit, which is commit2.
 
 But
 
@@ -332,7 +332,7 @@ But
 git revert 09949cc
 ```
 
-the workspace will revert back to the state that was present before the second commit (commit2) was made.
+will revert the workspace back to the state that was present _before_ the second commit (commit2) was made.
 Effectively, putting us back in state after the first commit was created. A major advantage of `revert` is the
 flexibility it provides regarding modification of files and the preservation of commits.
 
