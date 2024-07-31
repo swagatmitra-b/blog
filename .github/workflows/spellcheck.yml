@@ -23,4 +23,3 @@ jobs:
 
       - name: Run codespell
         run: codespell --ignore-words-list=fro,sais --skip="*.html, *.astro, *.ts, *js, *.json"
-        # run: codespell --ignore-words-list=hte --skip="*.html"
