@@ -7,9 +7,10 @@ words: ""
 ---
 
 No matter where you are in this world, the ghosts of your wrecked-up commit history will hunt you down.
-They will shred your silly commit messages, infiltrate your branches and plunder you of hundreds of lines
-of your spaghetti code, not to mention time. The only way you get to combat your those that stand your way is to befriend Git.
-In this article, I will go over some crucial Git concepts and techniques that I've picked up over the last year.
+They will shred your commit messages, infiltrate your branches and plunder you of hundreds of lines
+of your spaghetti code, not to mention time. The only way you get to combat your those that stand in your way
+is to befriend Git. In this article, I will go over some crucial Git concepts and techniques that I've picked
+up over the last year.
 
 As always, this is not meant to be an introduction to Git. I assume your familiar with preliminary Git stuff
 like branches and remotes, staging, committing, pushing amongst other basic commands. I will also use the words
@@ -27,14 +28,14 @@ Merging combines histories while rebasing rewrites histories.
 
 #### Git Merge
 
-A Fast-Forward merge (FF-merge) occurs when the parent branch has not diverged from the feature branch, in other words, it
-does not contain new commits since the base commit (parent commit) of the feature branch. Conventionally, a
-normal merge commit is created when both the parent branch and the feature branch have diverged.
+A Fast-Forward merge (FF-merge) occurs when the parent branch has not diverged from the feature branch, in other
+words, it does not contain new commits since the base commit (parent commit) of the feature branch.
+Conventionally, a normal merge commit is created when both the parent branch and the feature branch have diverged.
 
 ![Git Merge](../../../public/merge.webp)
 
 Usually, we do not need to bother ourselves with the choice of merges since Git automatically defaults to FF-merge
-whenever possible or a normal merge otherwise. But for specific situations, we can have various flags at our
+whenever possible or a normal merge otherwise. But for specific situations, we have various flags at our
 disposal to suit our needs.
 
 - `--no-ff` to enforce a merge commit even when fast-forward is possible
@@ -83,7 +84,7 @@ git rebase main
 Now, this might look a bit similar to a fast-forward (FF) merge, but it is not. In a rebase, we relocate the
 base commit of our feature branch to the tip (latest commit) of our main branch. The main branch is not
 affected by this action. However, in a fast-forward merge, we merge commits from a feature branch into the
-main branch, which leads to the main branch incorporating the commits made in the feature branch as its own.
+main branch, which leads to the main branch incorporating the commits made in the feature branch.
 The only common aspect between the two is the apparent "linearity" established by them, but do not be deceived
 by that!
 
@@ -114,27 +115,27 @@ git rebase --continue
 
 ```
 
-Evidently, the higher number of unique commits, the greater the hassle. But please note that merge conflicts
-only arise when there are discrepancies between two versions in the same file. If the main branch does not have
+Evidently, the higher number of unique commits, the greater the hassle. But please note that **merge conflicts
+only arise when there are discrepancies between two versions of the same file**. If the main branch does not have
 any commits that have modified the file the commits in your feature branch have, there will be no
-merge conflicts! You can abort rebase using
-the `--abort` flag or `--skip` to skip a commit.
+merge conflicts! You can always abort rebase using
+the `--abort` flag or `--skip` to skip a commit if you find yourself in a tangle.
 
-A crucial feature about rebasing that is often overlooked is that the commit hashes change
+A crucial feature about rebasing that is often overlooked is that commit hashes change
 when a branch is rebased. This is because rebasing, like we discussed, re-writes history. Since the base commit
-changes, it also influences the change in the hashes of individual commits. This also allows us to hange the
-commit message of each commit in the feature branch during the process.
+changes, it also influences the change in the hashes of individual commits.
 
-> We should refrain from rebasing pushed commits. As commit hashes change when rebasing, it causes issues for
-> other developers you're collaborating with.
+> We should refrain from rebasing branches whose commits have already been pushed remotely. As commit
+> hashes change when rebasing, it causes issues for other developers you're collaborating with.
 
 ## Editing with Interactive Rebase
 
-Discovering `git rebase --interactive` felt like a game changer. Interactive Rebase is an extremely versatile
-and powerful tool that allows us to modify our worktree.
+`git rebase --interactive` was something I regretted not knowing sooner. It is an
+extremely versatile and powerful tool that builds on top of a normal rebase and enables us to modify our
+commit tree.
 
 ```
-git rebase --interactive <commit-hash>
+git rebase -i <commit-hash>
 ```
 
 The commit-hash is important to capture the range of commits we want to perform the rebase against. This will
@@ -143,8 +144,8 @@ become clear shortly.
 #### Squashing
 
 Quashing commits together is sometimes helpful to delete redundant commit messages and clean up the timeline.
-We can take a cleaner look at our a commit history using `git log --oneline`, which does away with information
-like date/time of commit and author.
+We can have a less verbose look at our a commit history using `git log --oneline`, which does away with
+information like date/time of commit and author.
 
 ```
 8adcc0a commit4
@@ -165,10 +166,10 @@ pick 8adcc0a commit4
 The commits after the commit associated with ID `dfdf79f` (in this case, the first commit) are chosen and
 sorted in their order of occurrence, with the latest commit being at the bottom.
 
-`pick` is the default action for interactive rebase. All commits are set to `pick` as the rebase consider
-every commit. To squash commits 2 and 3 together into a single commit, we can change the `pick` to `squash`
+All commits are set to `pick` as default action for rebase.
+To squash commits 2 and 3 together into a single commit, we can change the `pick` to `squash`
 (or simply `s` for shorthand) against commit3. After we save and exit the editor, another instance of the editor
-will pop up asking us to write the commit message for the newly squashed commit. And after finally having done
+will pop up, asking us to write the commit message for the newly squashed commit. And after finally having done
 so, the rebase will complete successfully. Every action that is carried out in Interactive Rebase is followed
 by these last few steps that's automatically managed by Git and the editor.
 
@@ -250,7 +251,7 @@ git stash
 
 ## Detached Head
 
-A detached head state is when the `HEAD` of a branch is not pointing directly to any branch but rather
+A detached head state occurs when the `HEAD` of a branch is not pointing directly to any branch but rather
 a specific commit. As you might have already known, the `HEAD` pointer normally points to the latest commit
 of a branch but in a detached state, it isolates and points to a commit. This can be achieved by checking out
 the commit using its commit hash.
@@ -274,18 +275,19 @@ Detached states are useful for experimentation without affecting any branch.
 ## Undo-ing
 
 We're all bound to mess up Git at some point. This is why we have several methods to redeem ourselves from ghastly
-errors and go back to a previous safe state. In this section, we'll discuss the most common methods to retrace
+errors and go back to a safe state. In this section, we'll discuss the most common methods to retrace
 to previous commits.
 
 #### Git Reset
 
-Reset comes in two flavours. `--soft` and `--hard`. Using `--soft` keeps the file changes in the workspace but
-only moves the `HEAD` pointer to a previous commit. We must a commit-hash or the `HEAD` syntax to reset to a
+Reset comes in two flavours. `--soft` and `--hard`. Using `--soft` keeps file changes (both staged or unstaged)
+in the workspace but
+moves the `HEAD` pointer to a previous commit. We must use a commit-hash or the `HEAD` syntax to reset to a
 particular commit. For example, `--soft HEAD~2` will take the pointer to the last
-but second commit. Whereas, `--hard HEAD~2` will reset the file changes in the workspace to that commit while
-also moving the `HEAD` backwards. The `HEAD~n` and `<commit-hash>` syntax can be used in place of the other.
+but second commit. Whereas, `--hard HEAD~2` will reset the workspace to that commit along with the
+`HEAD`. The `HEAD~n` and `<commit-hash>` syntax can be used in place of the other.
 
-`--soft` can be used to "delete" commit messages and create new ones without altering the workspace.
+`--soft` is often used to "delete" commit messages and create new ones without altering the workspace.
 
 ```
 git reset --soft <HEAD~n> #n - number of previous commits to switch back to
@@ -299,12 +301,12 @@ commit from the timeline but instead discards its changes from the workspace. We
 reverting back to the original state later.
 
 How does `revert` and `reset --hard` work differently? A simple answer would be that `reset` does not leave
-room for merge conflicts. It simply undos all current changes and brings the workspace back to a previous commit.
+room for merge conflicts. It simply undos all current changes and transports the workspace back to a previous commit.
 Hence it is pretty straightforward. But `revert` allows us to consider and compare both current and previous
-states, hence creating a merge conflict. The same flags from rebase can be used to complete the reversion
+states when possible merge conflicts occur. The same flags from rebase can be used to complete the reversion
 accordingly.
 
-Another significant variation between the two is how they reflect the changes to particular commit.
+Another significant variation between the two is how they reflect the changes to when resetting back to a commit.
 Let's take an example.
 
 ```
@@ -329,11 +331,11 @@ the workspace (and HEAD pointer) will be brought back to the state _after_ secon
 But
 
 ```
-git revert 09949cc
+git revert 9cc7ad0
 ```
 
 will revert the workspace back to the state that was present _before_ the second commit (commit2) was made.
-Effectively, putting us back in state after the first commit was created. A major advantage of `revert` is the
+Effectively, putting us back after the first commit was created. A major advantage of `revert` is the
 flexibility it provides regarding modification of files and the preservation of commits.
 
 #### Git Restore
@@ -347,9 +349,9 @@ git restore <file>
 
 #### Undoing Rebase
 
-One of the major downsides to rebasing is the when you choose to undo rebased branches. Although, it is not
-encouraged to undo rebases as it makes matters more complicated for people working on them same or adjoining
-branches. Since rebasing changes commit hashes and re-writes history, it is often a problem when old commits are
+One of the major downsides to rebasing is undo-ing a rebase. Although, it is not
+encouraged to undo rebases as it makes matters more complicated for people working on the same or adjoining
+branches, it is not impossible. Since rebasing changes commit hashes and re-writes history, it is often a problem when old commits are
 referenced.
 
 We can use `git reflog <feat-branch>` to get the branch's timeline with rebase or reset operations.
@@ -360,5 +362,5 @@ the `rebase (finish)` message and perform a hard reset.
 
 Git is arguably the most indispensable tool for any developer. Whether you're an open-source maintainer,
 a do-gooder hobbyist, or a rebel like me trying to escape the clutches of corporate tech,
-I hope this helps you feel more comfortable about tackling large codebases. Now go teach someone a thing or two
+I hope this helps you feel more comfortable when tackling large codebases. Now go teach someone a thing or two
 about getting good at Git!
