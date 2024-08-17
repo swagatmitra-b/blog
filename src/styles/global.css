@@ -105,6 +105,12 @@ li::marker {
 ::-webkit-scrollbar-thumb {
   background-color: rgb(var(--gray-dark));
 }
+
+span.katex {
+  font-size: 1.3rem;
+  padding: 2rem 0rem;
+}
+
 @media (max-width: 720px) {
   body {
     font-size: 18px;
@@ -126,5 +132,10 @@ li::marker {
   ul,
   ol {
     padding: 0.5rem 1.6rem;
+  }
+
+  span.katex {
+    overflow-x: scroll;
+    font-size: 1rem;
   }
 }

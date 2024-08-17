@@ -1,0 +1,419 @@
+---
+title: My favourite inequalities
+description: "Number Theory appetizers for breakfast"
+pubDate: Aug 18 2024
+tags: [Mathematics]
+words: ""
+---
+
+There are imbalances present everywhere in nature. Their very existence is a macrocosm of bizarre phenomena 
+that react in wild and seemingly unpredictable ways.
+But mathematicians, the smartest and inquisitive of all humans, devised a way to reify these imbalances into a formal system
+that always hold true. Several abstract and difficult problems have been reduced to
+trivial solutions through a series logical consequences that arise from inequalities. And much to the irony,
+we need these inequalities to prove equalities of all kinds.
+
+Please bear in mind that over the course of this article, I will not go over the proofs of these inequalities
+to avoid making this a verbose mathematical discourse! I plan on keeping this extremely
+comprehensible and intuitive with a greater on focus on their applications, but I certainly do not mind
+expanding on examples to help clear the picture for you.
+
+## The Mean Triplet
+
+I consider the Mean-Triplet, more commonly known as the Arithmetic Mean(AM) - Geometric Mean(GM) - Harmonic Mean(HM)
+inequality, as the father of all inequalites. It is very fundamental and finds tremendous applications in
+everyday scenarios.
+
+_It states that for any non-negative real number, their AM is greater than their GM, which is in trun greater
+than their HM, with equality only when all values are equal._
+
+Mathematically,
+
+$$
+\frac{a_1 + a_2 + \dots + a_n}{n} \geq \sqrt[n]{a_1 \times a_2 \times \dots \times a_n} \geq
+\frac{n}{\frac{1}{a_1} + \frac{1}{a_2} + \dots + \frac{1}{a_n}}
+$$
+
+The AM-GM relationship is often used to maximize or minimize functions. The AM is simple and applies equal
+weight to every value when calculating the mean. The Geometric mean, on the other hand, is used to capture
+the averaging of compounding effects. To illustrate this, let us consider the annual returns of an investment
+for $$ 3 $$ years to be $$ 5\% $$, $$ 8\% $$, and $$ 6\% $$ respectively.
+
+If formula for the average growth rate for the period is given by
+
+$$
+
+(\prod_{i=n}^{n}(1 + n_i))^\frac{1}{n} - 1
+
+
+$$
+
+where $$ n_i $$ represents the return for the $$ ith $$ period and $$ n $$ is the total number of periods.
+Now, we need not really bother ourselves with the intricacies of this equation to understand the Geometric Mean
+but unfortunately, I love explaining.
+
+The $$ (1 + n_i) $$ term is called the growth factor. We can arrive at this quite easily when we look at the
+formula for fractional (or percent) change.
+
+$$
+
+\frac{final - initial}{initial} = change
+
+
+$$
+
+$$
+
+\frac{final}{initial} = 1 + change
+
+
+$$
+
+Evidently, the growth factor is simply the ratio of final and initial values, or $$ 1 $$ plus the fractional change.
+The signifance of this lies in the fact that adding $$ 1 $$ accounts for the initial value as well as the growth
+rate. Let's take an example. Say an investment has grown by $$ 12\% $$ (growth rate) in the past year.
+This means that the fractional increase is $$ 0.12 $$ times the initial investment. The $$ 1 $$ in $$ 1 + 0.12 $$
+includes the original investment. If we multiply $$ 1.12 $$ with the initial, we get the final return. We can
+also say that the final value is $$ 112\% $$ of the initial value. Similarly, if we incur a negative growth rate (loss) of say $$ 5\% $$, the growth factor
+would be $$ 1 + (-0.05) = 0.95 $$, meaning the final value is $$ 95\% $$ of the original.
+
+Now, multiplying all the growth factors gives us the total growth over all periods combined. And then taking
+its geometric mean averages the total growth over the entire period. This is important because unlike the
+AM, the GM successfully accounts for the compounding of each return in successive years. We then subtract 1
+from this average to convert it to a percentage. But how did that work? If you noticed, the geometric mean of
+the total growth is the growth factor. In our previous examples, a growth factor of 1.12 gives us a
+$$ 1.12 - 1 = 0.12 $$ growth rate and a growth factor of 0.95 gives us a $$ 0.95 - 1 = -0.05 $$ growth rate
+respectively. This shows that subtracting 1 from the growth factor gives us the percentage increase (or decrease) in our investment. With
+all of that away, the final average growth rate in our case would be,
+
+$$
+
+((1 + 0.05)(1 + 0.08)(1 + 0.06))^\frac{1}{3} - 1 = 1.0629 - 1 = 0.0629 = 6.29\%
+
+
+$$
+
+Taking the Arithmetic Mean would simply result in
+
+$$
+
+\frac{5\% + 8\% + 6\%}{3} = 6.33\%
+
+
+$$
+
+which isn't quite accurate. Note that the AM is always greater than the GM. The GM is more
+accurate in averaging rates with data whose relationships are multiplicative or proprotional in nature, as in our
+case.
+
+Additionally, we can also include the Quadratic Mean (QM, also known as the Root Mean Square), which applies a greater
+weight to the larger values and is often used in averaging varying quantities like AC current and voltage or
+measuring errors in statistics.
+
+$$
+\sqrt{\frac{a_1^2 + a_2^2 + \dots + a_n^2}{n}} \geq AM
+
+
+$$
+
+Like the GM, the Harmonic mean is also useful when averaging rates. It is used in finance to calculate
+analysis metrics like Price-to-Earnings ratio, or in electrical engineering to calculate
+equivalent resistances connected in parallel.
+Unlike the Quadratic Mean, which assigns a greater weight to the larger values in the set, the HM punishes the
+central tendency by applying a greater weight to the lower values.
+This means that greater the extremes in a series of values, the lower the Harmonic Mean. This is because HM relies on the reciprocals of each value. The smaller the value, the
+larger is its reciprocal, and consequently, the greater its influence in shifting the mean towards itself.
+But it obviously cannot be calculated if any of the values is zero, since the reciprocal of zero
+does not exist.
+
+The simplest example can be found in averaging speeds.
+Consider a car moving at $$ 20 $$km/h for $$ 10 $$km and $$ 40 $$km/h for another $$10$$km. If we take the AM of the speeds, we'd get
+$$ 30 $$km/h. But we know that average speed is equal
+to $$ \frac{total distance}{total time} $$. If we now calculate the average speed, we'll get $$ 26.66 $$ which is equal
+to the harmonic mean of the speeds and not the AM.
+
+$$
+
+\frac{20}{\frac{10}{20} + \frac{10}{40}} = 26.66 = \frac{2}{\frac{1}{20} + \frac{1}{40}}
+
+
+$$
+
+Why is this true? It is because the harmonic mean of speeds is weighted by time and not distance. Speed is inversely
+related to time. Hence, the time we spend at a particular speed affects the overall speed. The slower
+the speed, the greater is the time spent at that speed and the greater its impact in the average. The AM
+assumes that each speed is equally weighted, but what matters is not just the speed itself but the
+time spent at each speed. The HM is correct in applying greater weight to the the lower speeds.
+
+## The Cauchy-Schwarz Inequality
+
+The Cauchy-Schwarz is perhaps the most brilliant inequality with far-reaching applications in all of mathematics.
+
+_It states that for any two sets of real numbers $$ A = \{a_1, a_2, \dots, a_n\} $$ and $$ B = \{b_1, b_2, \dots, b_n\} $$,
+the product of the sum of the squares of each number in both sets, is greater than or equal to the square of the
+sum of the product of corresponding values of each set._
+
+$$
+
+(a_1^2 + a_2^2 + \dots + a_n^2)(b_1^2 + b_2^2 + \dots + b_n^2) \geq (a_1b_1 + a_2b_2 + \dots + a_nb_n)^2
+
+
+$$
+
+with the equality holding iff
+
+$$
+
+\frac{a_1}{b_1} = \frac{a_2}{b_2} = \dots = \frac{a_n}{b_n}
+
+
+$$
+
+A corollary definition of this inequality can be found in Vector Calculus, where it provides an upper bound for
+the for any two vectors $$ \vec{v} $$ and $$ \vec{u} \in \mathbb{R}^n $$
+
+$$
+
+\|\vec{v}\| \|\vec{u}\| \geq |\vec{v} \cdot \vec{u}|
+
+
+$$
+
+where $$ \|\vec{v}\| $$ and $$ \|\vec{v}\| $$ are the norms of the vectors
+and $$ | \vec{u} \cdot \vec{u} | $$ is the absolute value of their dot product,
+with equality holding iff the vectors are linearly dependent (there exists a scalar $$ a $$ which satisfies $$ \vec{v} = a\vec{u} $$)
+or one of the vectors is a null vector. A set of vectors are linearly dependent when
+at least one of the vectors can be written as a linear combination of the other vectors.
+
+The inequality provides an upper bound for the absolute value of the dot product of two vectors.
+Specifically, it states that the absolute value of the dot product cannot exceed the product
+of the magnitudes of the two vectors. Norm is just a fancy word used to describe the magnitude or length of
+the vector (in Euclidean space). By expanding the modulus of the inquality, we can determine the range
+of the dot product.
+
+$$
+
+- \|\vec{v}\| \|\vec{u}\| \leq \vec{v} \cdot \vec{u} \leq \|\vec{v}\| \|\vec{u}\|
+
+$$
+
+For the sake of simplicity, I have considered the vectors to belong to the real space $$ \mathbb{R}^n $$. But in general, 
+it holds true in non-Euclidean vector spaces with complex forms. The dot product is just a special
+case of the inner product in $$ \mathbb{R}^n $$ space.
+
+The applications of Cauchy-Schwarz can be seen when we take the cosine of the angle between two vectors
+
+$$
+
+\cos\theta = \frac{\vec{v} \cdot \vec{u}}{\|\vec{v}\| \|\vec{v}\|}
+
+
+$$
+
+or in the covariance inequality in probability theory
+
+$$
+
+Var(X)Var(Y) \geq Cov(X, Y)^2
+
+
+$$
+
+where $$ X $$ and $$ Y $$ are two random variables $$ Var $$ and $$ Cov $$ are their variance and covariance.
+It also gives rise to an inequality known as Titu's Lemma, which is of the form
+
+$$
+
+
+\frac{a_1^2}{b_1} + \frac{a_2^2}{b_2} + \dots + \frac{a_n^2}{b_n} \geq \frac{(a_1 + a_2 + \dots + a_n)^2}{b_1 + b_2 + \dots + b_n}
+
+
+$$
+
+This is often used as a shortcut for solving inequalities whose numerators are perfect squares.
+
+## The Rearrangement Inequality
+
+If you're familiar with greedy algorithms in computer science, this is exactly what it is.
+
+_It states that for any two sets of monotonically increasing real numbers $$ A = \{ a_1 \leq a_2 \leq \dots \leq a_n \} $$
+and $$ B = \{ b_1 \leq b_2 \leq \dots \leq b_n \} $$, the value of $$ a_1'b_1' + a_2'b_2' + \dots + a_n'b_n' $$, where $$ a_n' $$ and $$ b_n' $$
+denotes the nth value in any random permutation of both the sets, is maximised and minimised when_
+
+$$
+
+a_nb_n + a_{n-1}b_{n-1} + a_1b_1 \geq a_1'b_1' + a_2'b_2' + \dots + a_n'b_n' \geq a_nb_1 + a_{n-1}b_2 + \dots + a_1b_n
+
+
+$$
+
+If the above notation looks a little cumbersome, here's a breakdown of the inequality through an example.
+Consider three bags of 10 rupee, 20 rupee and 50 rupee notes, each containing 3 notes each.
+If we are asked to get the maximum amount by pick 5 notes in total, we would obviously pick 3 notes from the 50
+rupee bag, 2 from the 20, and none from the 10 rupee bag. This conclusion is simply common sense. Similarly,
+if we are asked to get the minimum, we'd pick three 10 rupee and two 20 rupee notes. The rearrangement inequality
+illustrates this exact "greedy" logic. Any other permutation (or grouping) of the notes, with the given constraint
+of 5 notes, would result in a value
+that lies between the two.
+
+This consequently leads us to another famous inequality known as Chebyshev's inequality.
+
+$$
+
+n(a_1b_1 + a_2b_2 + \dots + a_nb_n) \geq (a_1 + a_2 + \dots + a_n)(b_1 + b_2 + \dots + b_n)
+
+
+$$
+
+but when the sequences are oppositely oriented, say $$ B = \{b_1 \geq b_2 \geq \dots \geq b_n \} $$
+
+$$
+
+n(a_1b_1 + a_2b_2 + \dots + a_nb_n) \leq (a_1 + a_2 + \dots + a_n)(b_1 + b_2 + \dots + b_n)
+
+
+$$
+
+In both the cases, equality is achieved when the sequences are constant. The impact of Chebyshev's Inequality
+is widely felt in probability theory. It provides an upper bound on the probability that a random variable
+(say $$ X $$) deviates from its mean by more than a definite amount of standard deviations. 
+
+$$
+
+P(|X - \mu| \geq n\sigma) \leq \frac{1}{n^2}
+
+$$
+
+where $$ \mu $$ is the mean, $$ \sigma $$ is the SD and $$ n $$ is the number of SD. 
+This bound is not definitive but only provides a
+conservative estimate which works well for many cases, regardless of the type of distribution. 
+Due to this, it is widely applied in many statistical 
+inferences. Let's demonstrate this with an example. 
+
+The mean ($$ \mu $$) of the subject score for a group of students is $$ 60 $$ and the standard deviation is 
+$$ 15 $$. If we randomly pick a student, what is the probability that the student has a score which is greater
+than $$ 30 $$ but less than $$ 90 $$? 
+
+To solve this, let's first calculate the $$ n $$ (also the z-score), which gives us the 
+number of standard deviations above or below the mean. In this case, $$ \frac{60 - 30}{15} = \frac{90 - 60}{15} = 2 $$.
+If the values of n were not equal, we would settle with the greater z-score (we are only concerened about the magnitude and not sign).
+We now need $$ P(|X - \mu| < 2) $$, which is equal to  $$ 1 - P(|X - \mu| \geq 2) $$. Therefore
+
+$$
+
+P(|X - \mu| < 2) \geq 1 - \frac{1}{n^2}
+
+
+$$
+
+$$
+
+P(|X - \mu| < 2) \geq 1 - \frac{1}{4} = 1 - 0.25 = 0.75
+
+$$
+
+This shows that there is at least a $$ 75\% $$ chance that a randomly chosen student has a score between $$ 30 $$ and 
+$$ 90 $$.
+
+## Jensen's Inequality
+
+This is an extremely powerful inequality (and probably my favourite of all).
+To understand Jensen's inequality, let us first understand convex and concave functions.
+
+A function is convex (also concave up) if the second derivative, $$ f''(x) \geq 0 $$ and concave (also concave down) 
+if $$ f''(x) \leq 0 $$ for all $$ x \in \mathbb{R} $$. If $$ f''(x) = 0 $$, the point is an inflection point where
+the functions concavity (or convexity) changes.
+Further, the sign of the first derivative tells us whether the function is increasing or decreasing in the
+said interval.
+
+![Concavity](/concavity.webp)
+
+_Now, the inequality states that if $$ f(x) $$ is convex in the interval $$ [a, b] $$,_
+
+$$
+
+f(\frac{a_1 + a_2 + \dots + a_n}{n}) \leq \frac{f(a_1) + f(a_2) + \dots + f(a_n)}{n}
+
+
+$$
+
+_and if it is concave, the reverse inequality holds true $$ \forall x \in [a, b] $$_
+
+The simplest application of this inequality can be demonstrated by proving the AM-GM inequality.
+Let us consider a function $$ f(x) = -log(x) $$, whose graph looks like this. It is simply the reflection 
+of $$ log(x) $$ against the x-axis.
+![Log](/log.webp)
+
+The first derivative of this function is $$ f'(x) = -\frac{1}{x} $$, and its second derivative 
+$$ f''(x) = \frac{1}{x^2} $$. Since $$ f''(x) > 0 $$ for all $$ x \in \mathbb{R} - \{0\} $$,
+$$ f(x) $$ is concave up. Thus, by using the inequality, for all $$ x > 0 $$,
+
+$$
+
+log(\frac{x_1 + x_2 + \dots + x_n}{n}) \geq \frac{log(x_1) + log(x_2) + \dots + log(x_n)}{n}
+
+
+$$
+
+If you remember your properties of logarithm, you'll likely remember these two rules.
+
+$$
+
+log_{a^n}(b)^m = \frac{m}{n}log_a(b)
+
+
+$$
+
+$$
+
+log_a(b) = \frac{log_x{b}}{log_x{a}}
+
+
+$$
+
+Our goal is to raise the numerator to a fraction $$ \frac{1}{n} $$, since we need to obtain the 
+Geometric Mean, which is a surd.
+If we do this, we have to compensate by raising the power of the base to the same fraction, by following
+rule 1. Similarly, for the denominator, we know $$ log\_{e^1/n}(e) = n \times log_e(e) = n $$ as $$ log(e) = 1 $$.
+
+$$
+
+LHS \geq \frac{log_{e^1/n}(x_1 x_2 \dots x_n)^\frac{1}{n}}{log_{e^1/n}(e)}
+
+
+$$
+
+Now, applying the second rule to this inequality, we can replace the fraction with a logarithm whose base is the
+argument of the denominator ($$ e $$ in this case) and its argument the numerator. Hence, we get
+
+$$
+
+log_e(\frac{x_1 + x_2 + \dots + x_n}{n}) \geq log_e({(x_1 x_2 \dots x_n)^\frac{1}{n}})
+
+
+$$
+
+Since the base of the logarithms on both sides are $$ e $$, which is greater than 1, we can remove the function
+and simply apply the inequality to its arguments.
+
+$$
+
+\frac{x_1 + x_2 + \dots + x_n}{n} \geq (x_1 x_2 \dots x_n)^\frac{1}{n}
+
+
+$$
+
+> if $$ log_a(x) > log_a(y) $$, then
+> $$ x > y $$ when $$ a > 1 $$ and
+> $$ x < y $$ when $$ 0 < a < 1 $$
+
+This proves the AM-GM inequality. Isn't it remarkable?
+
+## Conclusion
+
+Mathematics was always my top subject throughout school. I never participated in rigorous
+maths competitions or bagged accolades of excellence, but my fascination for the discipline has no upper-bounds. 
+You can try the inequalities section in [Art of Problem Solving](https://artofproblemsolving.com/wiki/index.php/Inequality)
+for an in-depth reference or tackle the olympiad problems if you feel up for a challenge. 
+
+Embrace, not supress the imbalances that wrestle inside you. They all exist for a reason. 
