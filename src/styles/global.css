@@ -138,4 +138,8 @@ span.katex {
     overflow-x: scroll;
     font-size: 1rem;
   }
+
+  p.foot-text {
+    font-size: 0.7rem;
+  }
 }
