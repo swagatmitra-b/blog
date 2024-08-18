@@ -10,9 +10,9 @@ No matter where you are in this world, the ghosts of your wrecked-up commit hist
 They will shred your commit messages, infiltrate your branches and plunder you of hundreds of lines
 of your spaghetti code, not to mention time. The only way you get to combat those that stand in your way
 is to befriend Git. In this article, I will go over the most essential Git concepts and techniques
-I've picked up during the last year.
+that I've picked up during the last year.
 
-As always, this is not meant to be an introduction to Git. I assume your familiar with preliminary Git stuff
+As always, this is not meant to be an introduction to Git. I assume your familiarity with preliminary Git stuff
 like branches and remotes, staging, committing, pushing amongst other basic commands. I will also use the words
 parent-branch or main-branch interchangeably.
 
@@ -21,7 +21,7 @@ parent-branch or main-branch interchangeably.
 Primarily, developers hover around two philosophies when it comes to updating branches. **_Git Merge_** and
 **_Git Rebase_**.
 Merge creates a new _merge commit_ that merges all the changes from the feature branch
-(the branch you want to merge) to the parent branch (the branch you are on) into a single
+(the branch you want to merge) into the parent branch (the branch you are on) in a single
 commit on the parent branch, whereas rebasing is the change of the base commit of a branch.
 
 Merging combines histories while rebasing rewrites histories.
@@ -44,7 +44,8 @@ disposal to suit our needs.
 
 - `--abort` to abort a merge, usually during merge conflicts
 
-When working with remote branches, there are two commonly used methods for merge. Using `git pull`
+When working with remote branches, there are two commonly used methods for merging. Using `git pull`,
+which fetches and applies the changes from the remote to our workspace,
 
 ```
 (on: main) # merging remote feature branch
@@ -52,7 +53,7 @@ When working with remote branches, there are two commonly used methods for merge
 git pull <remote> <feature-branch>
 ```
 
-or using `git fetch`
+or using `git fetch`, which only fetches the latest changes present in the remote.
 
 ```
 (on: main) #merging remote feature branch
@@ -69,8 +70,8 @@ git merge <remote>/<feature-branch>
 
 Rebasing is deceptively simple to understand, but has a greater proclivity to cause issues in the long run.
 As I briefly mentioned at the start of this section, Rebase essentially re-writes history. Rebasing our feature
-branches changes the base commit of our feature branch to the latest commit on the parent branch, thus updating
-it with the latest commits from its parent branch and creating a linear timeline that's easy to understand.
+branch changes its base commit to the latest commit on the parent branch, thus updating
+it with fresh commits from its parent branch and creating a linear timeline that's easy to understand.
 The latter is one of the biggest benefits of rebasing. Merging multiple branches without rebasing can create
 a messy and convoluted commit graph.
 
@@ -115,8 +116,8 @@ git rebase --continue
 
 ```
 
-Evidently, the higher number of unique commits, the greater the hassle. But please note that **merge conflicts
-only arise when there are discrepancies between two versions of the same file**. If the main branch does not have
+Evidently, the higher number of unique commits, the greater the hassle. But please note that ***merge conflicts
+only arise when there are discrepancies between two versions of the same file***. If the main branch does not have
 any commits that have modified the file the commits in your feature branch have, there will be no
 merge conflicts! You can always abort rebase using
 the `--abort` flag or `--skip` to skip a commit if you find yourself in a tangle.
@@ -131,7 +132,7 @@ changes, it also influences the change in the hashes of individual commits.
 ## Editing with Interactive Rebase
 
 `git rebase --interactive` was something I regretted not knowing sooner. It is an
-extremely versatile and powerful tool that builds on top of a normal rebase and enables us to modify our
+extremely versatile and powerful tool that builds on top of normal rebase and enables us to modify our
 commit tree.
 
 ```
@@ -166,7 +167,7 @@ pick 8adcc0a commit4
 The commits after the commit associated with ID `dfdf79f` (in this case, the first commit) are chosen and
 sorted in their order of occurrence, with the latest commit being at the bottom.
 
-All commits are set to `pick` as default action for rebase.
+All commits are set to `pick` as the default action for rebase.
 To squash commits 2 and 3 together into a single commit, we can change the `pick` to `squash`
 (or simply `s` for shorthand) against commit3. After we save and exit the editor, another instance of the editor
 will pop up, asking us to write the commit message for the newly squashed commit. And after finally having done
@@ -198,7 +199,7 @@ fg2l55e commit1
 
 #### Edit, Reword and Drop
 
-Edit is used for editing a contents of commit during rebase. This will instruct Git to pause when it reaches the
+Edit is used for editing the contents of a commit during rebase. This will instruct Git to pause when it reaches the
 specified commit to allow the user to modify the workspace along with the commit message. By default, the `pick`
 action (or normal rebase) does not stop at every commit unless there is a merge conflict, in which case,
 we can compare the changes and modify the commit message. But `edit` (`e` for shorthand) gives us the
@@ -326,7 +327,7 @@ If we enter
 git reset --hard 9cc7ad0
 ```
 
-the workspace (and HEAD pointer) will be brought back to the state _after_ second commit, which is commit2.
+the workspace (and HEAD pointer) will be brought back to the state _after_ the second commit, which is commit2.
 
 But
 
@@ -362,5 +363,5 @@ the `rebase (finish)` message and perform a hard reset.
 
 Git is arguably the most indispensable tool for any developer. Whether you're an open-source maintainer,
 a do-gooder hobbyist, or a rebel like me trying to escape the clutches of corporate tech,
-I hope this helps you feel more comfortable when tackling large codebases. Now go teach someone a thing or two
+I hope this helps you feel more comfortable about tackling large codebases. Now go teach someone a thing or two
 about getting good at Git!

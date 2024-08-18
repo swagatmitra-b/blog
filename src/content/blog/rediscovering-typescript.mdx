@@ -37,7 +37,7 @@ function getCredentials<T>(password: T): T {
 ```
 
 This function does not have any constraints around the type T. Thus, it can accept any type without throwing an
-error. It accepts arguments of any type and expects to return a value of the same type.
+error, while expecting to return a value of the same type.
 
 ```typescript
 const getCredentials = <T>(password: T extends string | number): T => password
@@ -139,8 +139,8 @@ type check2 = (typeof b)[number]; // "hello" | 2 | "the world"
 ```
 
 We can use conditional checks using the ternary operator to create more complex types with logic.
-The `never` type is often useful while building conditionals as it allows us to enforce
-that all possible types have been accounted for. You can think of the `never` type as the null set (from set theory).
+The `never` type is often useful while building conditionals as it allows us to enforce exhaustiveness 
+and account for all possible types. You can think of the `never` type as the null set (from set theory).
 In TypeScript land, it signifies a value that cannot exist. Hence, it is used to remove or discard certain types
 that do not match our condition. The following example demonstrates this.
 
@@ -245,8 +245,8 @@ type checkInferPrefix = InferPrefix<typeof student1>[keyof typeof student1]; // 
 
 Advanced TypeScript can be an utter mess to deal with. When recursive types and complex chained conditionals
 make you want to pull your hair out, know that it is not worth screwing your head over when you can
-always settle for JSDoc or write a web server in plain C. But I hope this helps you in deciphering some of the
-mess inside TypeScript libraries if you ever plan on building one of your own.
+always settle for JSDoc or write a web server in plain C. But I hope this helps you in deciphering the clutter
+inside TypeScript libraries if you ever plan on building one of your own.
 Here are a few resources I've found helpful.
 
 - [TypeScript Docs](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html)
