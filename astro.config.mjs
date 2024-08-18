@@ -3,12 +3,14 @@ import mdx from "@astrojs/mdx";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import sitemap from "@astrojs/sitemap";
+import vercel from "@astrojs/vercel/serverless";
 
 import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://blog-swagatmitra.netlify.app",
+  output: "server",
+  site: "https://swagatmitrab.vercel.app",
   integrations: [
     mdx({
       syntaxHighlight: "shiki",
@@ -24,4 +26,7 @@ export default defineConfig({
     rehypePlugins: [rehypeKatex],
     remarkPlugins: [remarkMath],
   },
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+  }),
 });
