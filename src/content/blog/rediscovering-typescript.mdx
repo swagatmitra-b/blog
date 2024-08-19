@@ -6,20 +6,20 @@ tags: [Programming]
 words: ""
 ---
 
-About midway through 2023, I had become thoroughly annoyed with TypeScript in my projects. There was simply
-no end to the errors that would pop up on my editor whenever I opened a _.ts_ file. And more often than not, I ended
-up manually asserting types to resolve them, which virtually defeated the purpose of using TypeScript in the
-first place. But as with most things, there was nobody to blame but myself.
+About midway through 2023, I had become thoroughly annoyed with TypeScript.
+My constant tussles with the compiler assured me that using it for my projects was a recipe for
+DX distaster.
+For much of my time was spent in manually asserting types to resolve errors, which virtually defeated the purpose
+of using TypeScript in the first place. When man and machine both block each other, there is little progress to be made.
 
-About a week ago, I stumbled upon a blog post which tried to explain the solution of a problem from the [Advent of TypeScript challenge](https://typehero.dev/challenge/day-23).
-The "goal of the challenge" was to implement the game of Connect 4 in TypeScript and TypeScript only. Which
-meant that everything (any and all logic) was to be represented as types. This is the part where my brain,
-like any other brain that considers TypeScript insufferable, imploded. Even though I still do not
-understand much of it, I made it a point to appreciate the Turing Completeness of TypeScript's type system
-and the magic of compilers.
+But not more than a week ago, I stumbled upon a blog post which tried explaining the solution of a problem from the [Advent of TypeScript challenge](https://typehero.dev/challenge/day-23).
+The "goal of the challenge" was to implement the game of Connect 4 in TypeScript and TypeScript only. This
+meant that everything (any and all logic) was to be represented as types. That was when my brain,
+like any other brain that considered TypeScript insufferable, imploded. 
 
-Hence, this is a gentle introduction to the nitty-gritty parts of TS that I've learned since then to rescue
-myself from a barrage of squiggly red lines.
+Even though I still do not understand much of it, I made it a point to appreciate the Turing Completeness of TypeScript's type system
+and the magic of compilers. Hence, this is a gentle introduction to the nitty-gritty aspects of TS that has helped me rescue myself
+from a barrage of squiggly red lines.
 
 > Although I will review fundamentals whenever necessary, I assume you have basic familiarity with TypeScript.
 
@@ -139,7 +139,7 @@ type check2 = (typeof b)[number]; // "hello" | 2 | "the world"
 ```
 
 We can use conditional checks using the ternary operator to create more complex types with logic.
-The `never` type is often useful while building conditionals as it allows us to enforce exhaustiveness 
+The `never` type is useful when building conditionals as it allows us to enforce exhaustiveness
 and account for all possible types. You can think of the `never` type as the null set (from set theory).
 In TypeScript land, it signifies a value that cannot exist. Hence, it is used to remove or discard certain types
 that do not match our condition. The following example demonstrates this.
@@ -256,6 +256,6 @@ Here are a few resources I've found helpful.
 As for me, I'll probably just stick to my type.
 
 <div style="display: flex; justify-content: flex-end; color: #c4c1b9">
-    <p style="font-style: italic; margin-top: 10rem; width: 50%" class="foot-text">Finished in the airport lounge 
-    while awaiting the most delayed flight of my life.</p>
+    <p style="font-style: italic; margin-top: 10rem; width: 50%" class="foot-text">Finished in the airport lounge while awaiting the 
+    most delayed flight of my life. </p>
 </div>
