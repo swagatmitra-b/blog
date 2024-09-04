@@ -2,7 +2,7 @@
 title: The Git you need to know
 description: Not the 10,000th Git guide in the universe.
 pubDate: Aug 01 2024
-tags: [Programming]
+tags: [Technology]
 words: ""
 ---
 
@@ -116,8 +116,8 @@ git rebase --continue
 
 ```
 
-Evidently, the higher number of unique commits, the greater the hassle. But please note that ***merge conflicts
-only arise when there are discrepancies between two versions of the same file***. If the main branch does not have
+Evidently, the higher number of unique commits, the greater the hassle. But please note that **_merge conflicts
+only arise when there are discrepancies between two versions of the same file_**. If the main branch does not have
 any commits that have modified the file the commits in your feature branch have, there will be no
 merge conflicts! You can always abort rebase using
 the `--abort` flag or `--skip` to skip a commit if you find yourself in a tangle.
@@ -279,6 +279,11 @@ We're all bound to mess up Git at some point. This is why we have several method
 errors and go back to a safe state. In this section, we'll discuss the most common methods to retrace
 to previous commits.
 
+> Before we start retracing our paths, we need to have a clear picture of the modifications that are prevailing in
+> the current workspace. The `git diff` command is my favourite way to compare the changes in the current
+> workspace against the previous commit
+> state.
+
 #### Git Reset
 
 Reset comes in two flavours. `--soft` and `--hard`. Using `--soft` keeps file changes (both staged or unstaged)
@@ -367,6 +372,12 @@ I hope this helps you feel more comfortable about tackling large codebases. Now 
 about getting good at Git!
 
 <div style="display: flex; justify-content: flex-end; color: #c4c1b9">
-    <p style="font-style: italic; margin-top: 10rem; width: 50%" class="foot-text"> Finished in my dorm room (6008), 
-    realising that the hurdle of adapting to the environment is assuaged by a supply of good toilet paper.</p>
+  <p
+    style="font-style: italic; margin-top: 10rem; width: 50%"
+    class="foot-text"
+  >
+    {" "}
+    Finished in my dorm room (6008), realising that the hurdle of adapting to the
+    environment is assuaged by a supply of good toilet paper.
+  </p>
 </div>
