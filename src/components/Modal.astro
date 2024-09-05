@@ -1,0 +1,71 @@
+---
+import { getStaticPaths } from "../pages/blog/[...slug].astro";
+
+const data = await getStaticPaths();
+---
+
+<script define:vars={{ data }}>
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.querySelector("input");
+    const searchBox = document.querySelector(".searchbox");
+    const modal = document.querySelector(".modal");
+    let searchString = "";
+    document.addEventListener("keypress", (e) => {
+      if (e.key.length == 1) {
+        modal.classList.add("block");
+        modal.classList.remove("hidden");
+        input.focus();
+      }
+    });
+    input.addEventListener("input", (e) => {
+      searchString = e.target.value.replace(/\s+/g, "-");
+      const matches = runSearch();
+      populate(matches);
+    });
+
+    function runSearch() {
+      const slugData = data.map((post) => ({
+        slug: post.params.slug,
+        title: post.props.data.title,
+        tags: post.props.data.tags.map((tag) => tag.toLowerCase()),
+      }));
+      return slugData.filter(
+        (post) =>
+          post.slug.includes(searchString.toLowerCase()) ||
+          post.tags.includes(searchString)
+      );
+    }
+
+    function populate(matches) {
+      searchBox.innerHTML = "";
+      const htmlArray = matches.map((post) => {
+        return `<div class="">
+                    <a href="/blog/${post.slug}">${post.title}</a>
+                </div>`;
+      });
+      for (let div of htmlArray) {
+        searchBox.innerHTML += div;
+      }
+    }
+
+    document.addEventListener("click", (e) => {
+      if (e.target != modal) {
+        searchString = "";
+        input.value = "";
+        modal.classList.add("hidden");
+        modal.classList.remove("block");
+      }
+    });
+  });
+</script>
+
+<div
+  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-200 modal hidden h-1/2 w-1/3 p-7 rounded-md"
+>
+  <input
+    type="text"
+    class="w-full p-1 text-[1.2rem] border border-black"
+    placeholder="search by title or category"
+  />
+  <div class="searchbox my-3 h-5/6 overflow-y-auto"></div>
+</div>
