@@ -67,6 +67,17 @@ const { title, description, pubDate, words } = Astro.props;
         --astro-code-token-punctuation: #dee1e6;
         --astro-code-token-link: #dee1e6;
       }
+
+      @keyframes slide-up {
+        0% {
+          opacity: 0;
+          transform: translateY(100px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
     </style>
   </body>
 </html>

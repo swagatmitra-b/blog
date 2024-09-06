@@ -7,6 +7,7 @@ import FormattedDate from "../../components/FormattedDate.astro";
 import type { CollectionEntry } from "astro:content";
 import Paginate from "../../components/Paginate.astro";
 import Modal from "../../components/Modal.astro";
+import SlideUp from "../../lib/utils";
 
 export async function getStaticPaths({ paginate }: { paginate: any }) {
   const posts = (await getCollection("blog")).sort(
@@ -29,8 +30,6 @@ type Props = {
     };
   };
 };
-
-// console.log(page);
 ---
 
 <html lang="en">
@@ -56,7 +55,7 @@ type Props = {
         <ul class="flex flex-col flex-wrap gap-10">
           {
             page.data.map((post) => (
-              <li>
+              <li transition:animate={SlideUp}>
                 <a href={`/blog/${post.slug}/`}>
                   <h4 class="text-gray-200 hover:text-slate-400 transition-all duration-75 ease-in text-2xl md:text-3xl">
                     {post.data.title}

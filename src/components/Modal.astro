@@ -4,16 +4,16 @@ import { getStaticPaths } from "../pages/blog/[...slug].astro";
 const data = await getStaticPaths();
 ---
 
-<script define:vars={{ data }}>
-  document.addEventListener("DOMContentLoaded", () => {
+<script define:vars={{ data }} is:inline>
+  document.addEventListener("astro:page-load", () => {
     const input = document.querySelector("input");
     const searchBox = document.querySelector(".searchbox");
     const modal = document.querySelector(".modal");
     let searchString = "";
     document.addEventListener("keypress", (e) => {
       if (e.key.length == 1) {
-        modal.classList.add("block");
-        modal.classList.remove("hidden");
+        modal.classList.remove("hidden", "grow-back");
+        modal.classList.add("block", "grow-forward");
         input.focus();
       }
     });
@@ -52,8 +52,11 @@ const data = await getStaticPaths();
       if (!modal.contains(e.target)) {
         searchString = "";
         input.value = "";
-        modal.classList.add("hidden");
-        modal.classList.remove("block");
+        modal.classList.remove("block", "grow-forward");
+        modal.classList.add("grow-back");
+        setTimeout(() => {
+          modal.classList.add("hidden");
+        }, 400);
       }
     });
   });
@@ -69,3 +72,35 @@ const data = await getStaticPaths();
   />
   <div class="searchbox my-3 h-5/6 overflow-y-auto"></div>
 </div>
+
+<style>
+  @keyframes grow-forward {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes grow-back {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+    }
+  }
+
+  .grow-forward {
+    animation: grow-forward 0.4s ease forwards;
+  }
+
+  .grow-back {
+    animation: grow-back 0.4s ease forwards;
+  }
+</style>
