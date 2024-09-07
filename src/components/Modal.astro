@@ -9,8 +9,12 @@ const data = await getStaticPaths();
     const input = document.querySelector("input");
     const searchBox = document.querySelector(".searchbox");
     const modal = document.querySelector(".modal");
+    let matches = [];
     let searchString = "";
-    document.addEventListener("keypress", (e) => {
+    document.addEventListener("keydown", (e) => {
+      if (e.key == "Enter" && modal.classList.contains("block"))
+        window.location.replace(`/blog/${matches[0].slug}`);
+      if (e.key == "Escape") disolve(e);
       if (e.key.length == 1) {
         modal.classList.remove("hidden", "grow-back");
         modal.classList.add("block", "grow-forward");
@@ -18,20 +22,20 @@ const data = await getStaticPaths();
       }
     });
     input.addEventListener("input", (e) => {
-      searchString = e.target.value.replace(/\s+/g, "-");
-      const matches = runSearch();
+      searchString = e.target.value;
+      matches = runSearch();
       populate(matches);
     });
 
     function runSearch() {
       const slugData = data.map((post) => ({
         slug: post.params.slug,
-        title: post.props.data.title,
+        title: post.props.data.title.toLowerCase(),
         tags: post.props.data.tags.map((tag) => tag.toLowerCase()),
       }));
       return slugData.filter(
         (post) =>
-          post.slug.includes(searchString.toLowerCase()) ||
+          post.title.includes(searchString.toLowerCase()) ||
           post.tags.includes(searchString.toLowerCase())
       );
     }
@@ -49,16 +53,18 @@ const data = await getStaticPaths();
     }
 
     document.addEventListener("click", (e) => {
-      if (!modal.contains(e.target)) {
-        searchString = "";
-        input.value = "";
-        modal.classList.remove("block", "grow-forward");
-        modal.classList.add("grow-back");
-        setTimeout(() => {
-          modal.classList.add("hidden");
-        }, 400);
-      }
+      if (!modal.contains(e.target)) disolve();
     });
+
+    function disolve() {
+      searchString = "";
+      input.value = "";
+      modal.classList.remove("block", "grow-forward");
+      modal.classList.add("grow-back");
+      setTimeout(() => {
+        modal.classList.add("hidden");
+      }, 300);
+    }
   });
 </script>
 
@@ -97,10 +103,10 @@ const data = await getStaticPaths();
   }
 
   .grow-forward {
-    animation: grow-forward 0.4s ease forwards;
+    animation: grow-forward 0.3s ease forwards;
   }
 
   .grow-back {
-    animation: grow-back 0.4s ease forwards;
+    animation: grow-back 0.3s ease forwards;
   }
 </style>

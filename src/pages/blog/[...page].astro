@@ -57,7 +57,7 @@ type Props = {
             page.data.map((post) => (
               <li transition:animate={SlideUp}>
                 <a href={`/blog/${post.slug}/`}>
-                  <h4 class="text-gray-200 hover:text-slate-400 transition-all duration-75 ease-in text-2xl md:text-3xl">
+                  <h4 class="text-gray-200 hover:text-slate-400 transition-all duration-75 ease-in text-[1.65rem] md:text-3xl">
                     {post.data.title}
                   </h4>
                   <div class="flex gap-4 text-[1rem] items-center">
