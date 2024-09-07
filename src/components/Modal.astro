@@ -22,7 +22,7 @@ const data = await getStaticPaths();
       }
     });
     input.addEventListener("input", (e) => {
-      searchString = e.target.value;
+      searchString = e.target.value.replace(/\s+/g, "-");
       matches = runSearch();
       populate(matches);
     });
@@ -30,13 +30,13 @@ const data = await getStaticPaths();
     function runSearch() {
       const slugData = data.map((post) => ({
         slug: post.params.slug,
-        title: post.props.data.title.toLowerCase(),
+        title: post.props.data.title,
         tags: post.props.data.tags.map((tag) => tag.toLowerCase()),
       }));
       return slugData.filter(
         (post) =>
-          post.title.includes(searchString.toLowerCase()) ||
-          post.tags.includes(searchString.toLowerCase())
+          post.slug.includes(searchString.toLowerCase()) ||
+          post.tags.includes(searchString.replace(/-/g, " ").toLowerCase())
       );
     }
 
