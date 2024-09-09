@@ -8,7 +8,7 @@ const onBlogPage = pathname.split("/").filter((c) => c);
 ---
 
 <header
-  class={` ${+onBlogPage[1] || onBlogPage.length == 1 ? "px-8 md:-my-3 py-6 md:py-0" : "px-4 py-2"} text-white w-full ${position ? `${position} bg-black md:bg-transparent` : ""}`}
+  class={` ${+onBlogPage[1] || onBlogPage.length == 1 ? "px-8 md:-my-3 py-6 md:py-0" : "px-4 py-2"} text-white w-full z-10 ${position ? `${position} bg-black md:bg-transparent` : ""}`}
 >
   <nav
     class={`flex items-center justify-between ${+onBlogPage[1] || onBlogPage.length == 1 ? "" : "p-4"}`}
