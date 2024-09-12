@@ -4,6 +4,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import "katex/dist/katex.min.css";
+import Contents from "../components/Contents.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -20,7 +21,7 @@ const { title, description, pubDate, words } = Astro.props;
 
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description as string} />
   </head>
   <body>
     <Header position="fixed" />
@@ -46,6 +47,7 @@ const { title, description, pubDate, words } = Astro.props;
           </div>
         </div>
       </article>
+      <Contents/>
     </main>
     <style is:global>
       * {
