@@ -1,0 +1,170 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const a = posts.find(
+  (post) => "/blog/" + post.slug + "/" == Astro.url.pathname
+);
+
+const lexHeads = (body: string) => {
+  const values = [];
+  let content = "";
+  let backTickCount = 0;
+  let startBatchSize = 0;
+  let insideBackTick = false;
+
+  let tokenCounter = {
+    currToken: -1,
+    peekToken: 0,
+    nextToken() {
+      this.currToken += 1;
+      this.peekToken += 1;
+    },
+  };
+
+  const backTickBatch = (index: number) => {
+    let batchSize = 0;
+    while (body[index] == "`") {
+      batchSize += 1;
+      index++;
+    }
+    return batchSize;
+  };
+
+  for (let i = 0; i < body.length; i++) {
+    tokenCounter.nextToken();
+    let { currToken, peekToken } = tokenCounter;
+    if (body[currToken] == "`") {
+      if (!insideBackTick) {
+        backTickCount += 1;
+        if (!startBatchSize) {
+          startBatchSize = backTickBatch(i);
+          if (startBatchSize == 1) insideBackTick = true;
+          continue;
+        } else {
+          if (backTickCount == startBatchSize) {
+            insideBackTick = true;
+          } else if (backTickCount == 2 * startBatchSize) {
+            backTickCount = 0;
+            startBatchSize = 0;
+          }
+          continue;
+        }
+      } else {
+        let size = backTickBatch(i);
+        if (size !== startBatchSize) continue;
+        else {
+          insideBackTick = false;
+          backTickCount += 1;
+          if (startBatchSize == 1) {
+            backTickCount = 0;
+            startBatchSize = 0;
+          }
+          continue;
+        }
+      }
+    }
+    if (insideBackTick) continue;
+    if ((body[currToken] == "#" && body[currToken - 1] == "\n") || content) {
+      content += body[currToken];
+      if (body[peekToken] == "\r" || body[peekToken] == "\n") {
+        values.push({
+          value: content.trim().split(" "),
+          slug: content
+            .trim()
+            .split(" ")
+            .slice(1)
+            .map((val) => val.toLowerCase().replace(",", "").replace("'", ""))
+            .join("-"),
+        });
+        content = "";
+      }
+    }
+  }
+
+  return values;
+};
+
+const res = lexHeads(a?.body as string);
+
+console.log(res);
+console.log(Astro.url.pathname);
+---
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const contentBox = document.querySelector(".pager") as HTMLElement;
+    const button = document.querySelector(".pagerbutton") as HTMLElement;
+    button.addEventListener("click", (e) => {
+      e.stopImmediatePropagation();
+      toggleIn();
+    });
+    document.addEventListener("keypress", () => {
+      if (contentBox.classList.contains("up")) toggleIn();
+      else toggleOut();
+    });
+    document.addEventListener("click", (e) => {
+      if (!contentBox.contains(e.target as HTMLElement)) toggleOut();
+    });
+    const toggleIn = () => {
+      contentBox.classList.remove("up");
+      contentBox.classList.add("md:block", "down");
+      contentBox.style.transform = "translateY(-1%)";
+    };
+    const toggleOut = () => {
+      contentBox.classList.remove("down");
+      contentBox.classList.add("up");
+      contentBox.style.transform = "translateY(-100%)";
+    };
+  });
+</script>
+
+<button
+  class="text-white hidden md:block top-0 z-10 fixed pagerbutton w-full h-8 rounded-md"
+  >️️</button
+>
+<div
+  class="pager hidden fixed text-lg text-white up rounded-lg bg-slate-900 border border-white w-1/2 z-10 p-4"
+>
+  <ul class="list-none p-0">
+    {
+      res.map((title) => (
+        <li style={`padding-left: ${title.value[0].length}rem;`}>
+          <a href={Astro.url.pathname + `#${title.slug}`}>
+            - {title.value.slice(1).join(" ")}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .down {
+    animation: swingdown 0.5s;
+    transition: all 0.5s;
+  }
+
+  .up {
+    animation: swingup 0.5s;
+    transition: all 0.5s;
+  }
+
+  @keyframes swingdown {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(-1%);
+    }
+  }
+
+  @keyframes swingup {
+    from {
+      transform: translateY(-1%);
+    }
+    to {
+      transform: translateY(-100%);
+    }
+  }
+</style>

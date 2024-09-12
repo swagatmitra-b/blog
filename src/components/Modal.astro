@@ -13,7 +13,7 @@ const data = await getStaticPaths();
     let searchString = "";
     document.addEventListener("keydown", (e) => {
       if (e.key == "Enter" && modal.classList.contains("block"))
-        window.location.replace(`/blog/${matches[0].slug}`);
+        window.location.replace(`/blog/${matches[0].slug}/`);
       if (e.key == "Escape") disolve(e);
       if (e.key.length == 1) {
         modal.classList.remove("hidden", "grow-back");
@@ -61,9 +61,6 @@ const data = await getStaticPaths();
       input.value = "";
       modal.classList.remove("block", "grow-forward");
       modal.classList.add("grow-back");
-      setTimeout(() => {
-        modal.classList.add("hidden");
-      }, 300);
     }
   });
 </script>
