@@ -95,6 +95,18 @@ console.log(Astro.url.pathname);
   document.addEventListener("astro:page-load", () => {
     const contentBox = document.querySelector(".pager") as HTMLElement;
     const button = document.querySelector(".pagerbutton") as HTMLElement;
+    const links = document.querySelectorAll("li");
+
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const a = e.target as HTMLElement;
+        const target = document.getElementById(a.dataset.slug as string);
+        target?.scrollIntoView({
+          behavior: "smooth",
+        });
+      });
+    });
+
     button.addEventListener("click", (e) => {
       e.stopImmediatePropagation();
       toggleIn();
@@ -129,10 +141,12 @@ console.log(Astro.url.pathname);
   <ul class="list-none p-0">
     {
       res.map((title) => (
-        <li style={`padding-left: ${title.value[0].length}rem;`}>
-          <a href={Astro.url.pathname + `#${title.slug}`}>
-            - {title.value.slice(1).join(" ")}
-          </a>
+        <li
+          class="text-[#db2777] hover:text-white duration-100 cursor-pointer"
+          style={`padding-left: ${title.value[0].length ?? 0}rem;`}
+          data-slug={title.slug}
+        >
+          - {title.value.slice(1).join(" ")}
         </li>
       ))
     }
