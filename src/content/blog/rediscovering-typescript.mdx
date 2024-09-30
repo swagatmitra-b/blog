@@ -26,9 +26,14 @@ from a barrage of squiggly red lines.
 ### Generics and Conditional Types
 
 Generics are an ingenious concept in modern programming languages that help in creating flexible data types.
-Strongly typed languages like Rust and TypeScript make use of generics to help increase their tolerance of
-dynamic types generated during runtime while maintaining type-safety. This is made possible with the help of
-constraints introduced around the type arguments. The compiler is also able to infer most types at runtime.
+Strongly typed languages like Rust and TypeScript make use of generics to help increase their flexibility with
+dynamic types while maintaining type-safety. This is made possible with the help of
+constraints introduced around the type arguments.
+The type system is inherently static, meaning that it only works at compile-time, not runtime. This is exactly
+why certian properties like the length of Tuple types are accessible but not that of regular arrays. Tuples have
+a predefined length at compile-time, unlike dynamic arrays. The compiler is able to infer most types at compile-time 
+only. After all, all TS code is transpiled to JavaScript, which effectively erases all type enforcing,
+before it is shipped to the browser. 
 
 ```typescript
 function getCredentials<T>(password: T): T {
