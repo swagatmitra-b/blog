@@ -30,7 +30,7 @@ Strongly typed languages like Rust and TypeScript make use of generics to help i
 dynamic types while maintaining type-safety. This is made possible with the help of
 constraints introduced around the type arguments.
 The type system is inherently static, meaning that it only works at compile-time, not runtime. This is exactly
-why certian properties like the length of Tuple types are accessible but not that of regular arrays. Tuples have
+why certain properties like the length of Tuple types are accessible but not that of regular arrays. Tuples have
 a predefined length at compile-time, unlike dynamic arrays. The compiler is able to infer most types at compile-time 
 only. After all, all TS code is transpiled to JavaScript, which effectively erases all type enforcing,
 before it is shipped to the browser. 
@@ -266,3 +266,30 @@ As for me, I'll probably just stick to my type.
     life.
   </p>
 </div>
+
+## Bonus: The Chicken-McNugget Theorem
+
+This has to be my favourite little theorem of all time, not just for its fancy name, but for good reason.
+It states that
+_for any two co-prime numbers $$ a $$ and $$ b $$, the greatest integer that cannot be written as a linear_
+_combination of a and b $$ (ax + by) $$ is $$ mn - m - n $$._ Let's illustrate this with an example.
+
+Consider a game that awards $$ 7 $$ points and $$ 11 $$ points to the player on the basis of various scenarios. Since, $$ 7 $$
+and 11 are co-prime, we can apply the McNugget theorem and find that $$ 59 $$ which is $$(7 \times 11 - 7 - 11) $$,
+is the maximum amount of points that cannot be scored by any player. Thus, scoring $$ 59 $$ points is an impossibility
+for any player playing the game. After $$ 59 $$ points, every point can be represented as a linear combination
+of $$ 7 $$ and $$ 11 $$. 
+
+$$
+  60 = 7 \times 7 + 11 \times 1
+$$
+$$
+  61 = 7 \times 4 + 11 \times 3
+$$
+$$
+  62 = 7 \times 1 + 11 \times 5
+$$
+
+Of course, smaller impossible scores like 10, 20, etc. exist, but are of trivial concern. 
+
+You can read the story behind it's unique name [here](https://artofproblemsolving.com/wiki/index.php/Chicken_McNugget_Theorem) :)
