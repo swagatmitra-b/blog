@@ -30,7 +30,7 @@ When variables are passed to a function, most data-types are by default, passed 
 This means that only copies of the variables are passed to the function. Modifying them inside the function only changes a local copy
 of the variable, not the underlying original value stored in
 the memory. Copying them does not really create extra memory overhead due to their small size.
-To change their underlying value, we pass a pointer to the variable in the funciton, and then modify its
+To change their underlying value, we pass a pointer to the variable in the function, and then modify its
 value by dereferencing the pointer (`*ptr`) inside the function. This is called pass by reference since the memory-address
 of the variable is passed, not a copy.
 
@@ -67,7 +67,7 @@ value to the function. This might all seem a bit confusing. Let's take an exampl
 ```c
 
 void modifyArr(int arr[], int size) {
-    arr[0] = 1; // modifying content of orignal array
+    arr[0] = 1; // modifying content of original array
 
     arr = NULL; // only changes local copy of arr
 
@@ -78,7 +78,7 @@ void modifyArr(int arr[], int size) {
 
 int main() {
     int arr[] = {1, 2, 3};
-    modifiyArr(arr, 3);
+    modifyArr(arr, 3);
     printf("%d", arr[0]); // still prints 1
 }
 
@@ -135,7 +135,7 @@ crash the program, but will certainly cause undesired behaviour that is hard to 
 hand, do not point to any location. And while dereferencing them will certainly crash the program, the programmer
 will have better information to track and resolve the error. Secondly, we can check for nullity of a pointer
 before dereferencing it, but we cannot detect whether pointer is pointing to a valid memory location or not, as
-in the case of uninitialized pointers. We will discuss this futher when we learn about dangling pointers.
+in the case of uninitialized pointers. We will discuss this further when we learn about dangling pointers.
 
 ### Arrays
 
