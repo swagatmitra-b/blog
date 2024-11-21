@@ -25,14 +25,14 @@ I promise we'll improve this boring textbook definition to something interesting
 ### Value and Reference
 
 We are aware that pointers allow us to directly manipulate the memory, but that's a rather useless statement and hardly explains
-its true nature. To understand them, we must look at how variables mutation is handled.
-When variables are passed to a function, most data-types are by default, passed by value. These include integers, doubles, chars and booleans.
+their true nature. To understand them, we must look at how variable mutation is handled.
+When variables are passed to a function, most data-types are by default, _passed-by-value_. These include integers, doubles, chars and booleans.
 This means that only copies of the variables are passed to the function. Modifying them inside the function only changes a local copy
 of the variable, not the underlying original value stored in
-the memory. Copying them does not really create extra memory overhead due to their small size.
+memory. Copying these data types does not really create extra memory overhead due to their small size.
 To change their underlying value, we pass a pointer to the variable in the function, and then modify its
-value by dereferencing the pointer (`*ptr`) inside the function. This is called pass by reference since the memory-address
-of the variable is passed, not a copy.
+value by dereferencing the pointer (`*ptr`) inside the function. This is called _pass-by-reference_ since a pointer
+of the variable is passed, not a copy of its value.
 
 ```c
 
@@ -67,7 +67,7 @@ value to the function. This might all seem a bit confusing. Let's take an exampl
 ```c
 
 void modifyArr(int arr[], int size) {
-    arr[0] = 1; // modifying content of original array
+    arr[0] = 2; // modifying content of original array
 
     arr = NULL; // only changes local copy of arr
 
@@ -79,7 +79,7 @@ void modifyArr(int arr[], int size) {
 int main() {
     int arr[] = {1, 2, 3};
     modifyArr(arr, 3);
-    printf("%d", arr[0]); // still prints 1
+    printf("%d", arr[0]); // prints 2
 }
 
 ```
@@ -126,7 +126,7 @@ printf("%s", (char*)a); // typecast before dereferencing
 ```
 
 On the first line in the snippet above, I declared a pointer `ptr` but did
-not initialize it. This is a bad practice. The correct way would be to initialize it to NULL. But you may wonder,
+not initialize it. This is a common malpractice. The correct way would be to initialize it to NULL. But you may wonder,
 what difference does this make? Won't dereferencing an uninitialized pointer and a NULL pointer both cause
 errors? If so, why bother? The reason is two fold.
 
@@ -183,26 +183,28 @@ This _pointer-to-array_ type is especially helpful when dealing with multidimens
 _pointer-to-pointers_.
 
 ```c
-int matrix[][3] = {
-    {1, 2, 3},
-    {4, 5, 6},
-    {8, 9, 0},
-};
+  int matrix[][3] = {
+      {1, 2, 3},
+      {4, 5, 6},
+      {8, 9, 0},
+  };
 
-int (*ptr)[][3]= &matrix;
+  int (*ptr)[]= &matrix[2];
 
-printf("%d", (*ptr)[2][1]); // 9
-printf("%d", (*ptr)[2][1]++); // 9
+  printf("%d", matrix[2][1]); // 9
+  printf("%d", (*ptr)[1]); // 9
+  printf("%d", (*ptr + 1)[1]); // 0 (pointer arithmetic)
+  printf("%d", (*ptr + 1)[-1]); // 8
 ```
 
-It is necessary to specify the inner dimension of the 2D array. This is because the compiler calculates the
+{/* It is necessary to specify the inner dimension of the 2D array. This is because the compiler calculates the
 address of each element using the formula
 
 $$
     \&a[i][j] = baseAddress + (i \times cols + j) \times elementSize
 $$
 
-which is only possible when the number of columns (inner dimension) is explicitly specified.
+which is only possible when the number of columns (inner dimension) is explicitly specified. */}
 
 Although an array name decays to a pointer, they are not equivalent when we compare their sizes.
 
@@ -286,7 +288,7 @@ int gimme_arr() {
 }
 ```
 
-This method isn't preferred since static variables persist their state and are not thread safe,
+However, this method isn't preferred since static variables persist their state and are not thread safe,
 making them difficult to manage. The answer to this is dynamic memory allocation.
 
 ```c
@@ -339,13 +341,13 @@ This first type, what I like to call the _string-pointer_ type, is immutable, bu
 
 char a[] = "hello";
 
-a[0] = "c"; // allowed
+a[0] = 'c'; // allowed
 
 a = "world"; // not allowed
 
 ```
 
-In this representation, the string can be mutated but not re-assigned.
+In this traditional representation of a string in C, the string can be mutated but not re-assigned.
 
 For the final variant, we have strings allocated on the heap.
 
@@ -411,7 +413,7 @@ const int *const ptr = &a;
 ptr = &b; // error
 ```
 
-All of this can also be said for other data-types, including structs.
+All of this can also be extended to other data-types, including structs.
 
 {/* ### Function Pointers */}
 
