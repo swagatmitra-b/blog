@@ -1,3 +1,4 @@
+// import { file } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
 const blog = defineCollection({
@@ -13,4 +14,9 @@ const blog = defineCollection({
   }),
 });
 
+// const books = defineCollection({
+//   loader: file("src/content/books.json")
+// })
+
+// export const collections = { blog, books };
 export const collections = { blog };
