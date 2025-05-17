@@ -12,6 +12,7 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image = "/blog-placeholder-1.jpg" } = Astro.props;
+console.log(canonicalURL, title, description, image);
 import { ClientRouter } from "astro:transitions";
 ---
 
@@ -19,16 +20,17 @@ import { ClientRouter } from "astro:transitions";
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.jpg" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="RSS Feed for swagatmitra"
+  href="/rss.xml"
+/>
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
-<!-- <link
-  rel="preload"
-  href="/fonts/noto-sans-jp-regular.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin="anonymous"
-/> -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
   href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400&display=swap&subset=latin"
   rel="stylesheet"
@@ -41,6 +43,12 @@ import { ClientRouter } from "astro:transitions";
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+<meta name="robots" content="index, follow" />
+<meta name="author" content="Swagatmitra Bhattacharya" />
+<meta
+  name="keywords"
+  content="Swagatmitra, swagatmitrab, blog, writer, developer, astro, music"
+/>
 <ClientRouter />
 
 <!-- Open Graph / Facebook -->
@@ -56,3 +64,16 @@ import { ClientRouter } from "astro:transitions";
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Swagatmitra Bhattacharya",
+    "url": "https://swagatmitrab.vercel.app",
+    "sameAs": [
+      "https://github.com/swagatmitra-b",
+      "https://twitter.com/swagatmitra"
+    ]
+  }
+</script>
