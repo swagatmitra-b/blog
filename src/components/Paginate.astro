@@ -1,11 +1,16 @@
 ---
 const { prev, next, last } = Astro.props;
+
+const showArrow = Astro.url.pathname;
+const page = +showArrow[showArrow.length - 1];
 ---
 
 <nav class="flex gap-5 text-xl">
-  <a href={prev} class="text-[#c4c1b9]"> &lt; </a>
+  <a href={prev} class={`text-[#c4c1b9] ${!page ? "hidden" : ""}`}> &lt; </a>
   <a href="/blog" class="text-[#c4c1b9]"> 1 </a>
-  <span>...</span>
+  <span class="text-gray-500">...</span>
   <a href={"/blog/" + last} class="text-[#c4c1b9]">{last}</a>
-  <a href={next} class="text-[#c4c1b9]"> &gt; </a>
+  <a href={next} class={`text-[#c4c1b9] ${page == last ? `hidden` : ``}`}>
+    &gt;
+  </a>
 </nav>
