@@ -7,11 +7,9 @@ html {
 :root {
   --accent: #2337ff;
   --accent-dark: #000d8a;
-  --black: 15, -gray: 96, 115, 159;
-  -gray-light:
-    2 29,
-    233,
-    240;
+  --black: 15, 18, 25;
+  --gray: 96, 115, 159;
+  --gray-light: 229, 233, 240;
   --gray-dark: 34, 41, 57;
   --hot-pink: 219, 39, 119;
   --gray-gradient: rgba(var(--gray-light), 50%), #fff;
