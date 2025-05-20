@@ -1,8 +1,8 @@
 ---
 const { prev, next, last } = Astro.props;
 
-const showArrow = Astro.url.pathname;
-const page = +showArrow[showArrow.length - 1];
+const parts = Astro.url.pathname.split("/");
+const page = +parts[parts.length - 1];
 ---
 
 <nav class="flex gap-5 text-xl">
