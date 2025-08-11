@@ -3,7 +3,6 @@ const { prev, next, last } = Astro.props;
 
 const parts = Astro.url.pathname.split("/");
 const page = +parts[parts.length - 2];
-console.log(parts, page);
 ---
 
 <nav class="flex gap-5 text-xl">

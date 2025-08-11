@@ -85,7 +85,7 @@ const lexHeads = (body: string) => {
   return values;
 };
 
-const res = lexHeads(a?.body as string);
+const res = lexHeads((a?.body ?? " ") as string);
 ---
 
 <script>
