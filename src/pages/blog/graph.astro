@@ -1,0 +1,204 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const rootNode = { id: "__root__", title: "All Posts", type: "root" };
+
+const categories = Array.from(
+  new Set(posts.flatMap((p) => p.data.tags || []))
+).map((cat) => ({ id: `cat_${cat}`, title: cat, type: "category" }));
+
+const postNodes = posts.map((p) => ({
+  id: p.slug,
+  title: p.data.title,
+  categories: p.data.tags || [],
+  type: "post",
+}));
+
+const nodes = [rootNode, ...categories, ...postNodes];
+
+const links: { source: string; target: string }[] = [];
+
+categories.forEach((cat) => {
+  links.push({ source: rootNode.id, target: cat.id });
+});
+
+postNodes.forEach((post) => {
+  post.categories.forEach((cat) => {
+    links.push({ source: `cat_${cat}`, target: post.id });
+  });
+});
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      main {
+        height: 100%;
+      }
+      #graph {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        background: #0d1117; /* dark background for contrast */
+      }
+    </style>
+  </head>
+
+  <body>
+    <Header position="fixed" />
+    <main>
+      <canvas id="graph"></canvas>
+    </main>
+  </body>
+</html>
+
+<script define:vars={{ links, nodes }} is:inline type="module">
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+  const canvas = document.getElementById("graph");
+  const ctx = canvas.getContext("2d");
+
+  const categoryColor = "yellow";
+  const postColor = "lightgreen";
+
+  const categories = nodes
+    .filter((n) => n.type === "category")
+    .map((n) => n.id);
+  const categoryColorScale = d3
+    .scaleOrdinal()
+    .domain(categories)
+    .range(d3.schemeCategory10);
+
+  links.forEach((link) => {
+    if (link.source == "__root__") link.categoryId = link.target;
+    else link.categoryId = link.source;
+  });
+
+  const simulation = d3
+    .forceSimulation(nodes)
+    .alphaTarget(0.12)
+    .force(
+      "link",
+      d3
+        .forceLink(links)
+        .id((d) => d.id)
+        .distance((d) =>
+          d.source.type === "root"
+            ? 200
+            : d.source.type === "category"
+              ? 120
+              : 80
+        )
+    )
+    .force("charge", d3.forceManyBody().strength(-700))
+    .force(
+      "center",
+      d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)
+    )
+    .force("collide", d3.forceCollide().radius(15))
+    .on("tick", render);
+
+  let transform = d3.zoomIdentity;
+  const zoomHandler = d3
+    .zoom()
+    .scaleExtent([0.5, 5])
+    .on("zoom", (event) => {
+      transform = event.transform;
+      render();
+    });
+
+  d3.select(canvas).call(zoomHandler).on("pointermove", repel);
+
+  let highlightedCategoryId = null;
+
+  function repel(event) {
+    const [x, y] = transform.invert(d3.pointer(event, canvas));
+
+    const node = simulation.find(x, y, 500);
+    if (node) {
+      const dx = node.x - x;
+      const dy = node.y - y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+      const strength = 200 / dist;
+      node.vx += (dx / dist) * strength;
+      node.vy += (dy / dist) * strength;
+      if (node.type === "category") {
+        highlightedCategoryId = node.id;
+      } else if (node.type === "post") {
+        const parentLink = links.find(
+          (l) => l.target.id === node.id && l.source.type === "category"
+        );
+        highlightedCategoryId = parentLink ? parentLink.source.id : null;
+      }
+    } else highlightedCategoryId = null;
+  }
+
+  function render() {
+    ctx.save();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.translate(transform.x, transform.y);
+    ctx.scale(transform.k, transform.k);
+
+    ctx.lineWidth = 2;
+    links.forEach((link) => {
+      ctx.strokeStyle =
+        highlightedCategoryId && highlightedCategoryId === link.categoryId
+          ? categoryColorScale(link.categoryId)
+          : "#555";
+      ctx.beginPath();
+      ctx.moveTo(link.source.x, link.source.y);
+      ctx.lineTo(link.target.x, link.target.y);
+      ctx.stroke();
+    });
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    nodes.forEach((node) => {
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, 6, 0, 2 * Math.PI);
+      ctx.fillStyle =
+        node.type === "root"
+          ? "#ffffff"
+          : node.type === "category"
+            ? categoryColor
+            : postColor;
+
+      if (node.type === "root") {
+        ctx.font = "1.1rem sans-serif";
+      } else if (node.type === "category") {
+        ctx.font = "0.92rem sans-serif";
+      } else {
+        ctx.font = "0.78rem sans-serif";
+      }
+      ctx.fill();
+      ctx.fillStyle = "#fff";
+      ctx.fillText(node.title, node.x, node.y + 8);
+    });
+
+    ctx.restore();
+  }
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    simulation.force(
+      "center",
+      d3.forceCenter(canvas.width / 2, canvas.height / 2)
+    );
+    render();
+  }
+  window.addEventListener("resize", resize);
+  resize();
+</script>
