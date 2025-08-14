@@ -7,30 +7,73 @@ import { getCollection } from "astro:content";
 const posts = await getCollection("blog");
 const rootNode = { id: "__root__", title: "All Posts", type: "root" };
 
-const categories = Array.from(
-  new Set(posts.flatMap((p) => p.data.tags || []))
-).map((cat) => ({ id: `cat_${cat}`, title: cat, type: "category" }));
+const categoryMap = new Map<
+  string,
+  {
+    id: string;
+    title: string;
+    categories: string[];
+    type: string;
+  }[]
+>();
 
-const postNodes = posts.map((p) => ({
-  id: p.slug,
-  title: p.data.title,
-  categories: p.data.tags || [],
-  type: "post",
+const postNodes = posts.map((p) => {
+  const post = {
+    id: p.slug,
+    title: p.data.title,
+    categories: p.data.tags,
+    type: "post",
+  };
+  p.data.tags.forEach((cat) =>
+    categoryMap.has(cat)
+      ? categoryMap.get(cat)?.push(post)
+      : categoryMap.set(cat, [post])
+  );
+  return post;
+});
+
+const categoryNodes = Array.from(categoryMap.keys()).map((cat) => ({
+  id: `cat_${cat}`,
+  title: cat,
+  type: "category",
 }));
 
-const nodes = [rootNode, ...categories, ...postNodes];
+const MAX_DEGREE = 6;
 
-const links: { source: string; target: string }[] = [];
+const newNodes = [rootNode, ...categoryNodes, ...postNodes];
 
-categories.forEach((cat) => {
-  links.push({ source: rootNode.id, target: cat.id });
+const newLinks: any[] = [];
+
+categoryNodes.forEach((cat) => {
+  const children = categoryMap.get(cat.title) || [];
+
+  if (children.length <= MAX_DEGREE) {
+    newLinks.push({ source: rootNode.id, target: cat.id });
+    children.forEach((post) => {
+      newLinks.push({ source: cat.id, target: post.id });
+    });
+  } else {
+    newLinks.push({ source: rootNode.id, target: cat.id });
+    let clusterIndex = 0;
+    for (let i = 0; i < children.length; i += MAX_DEGREE) {
+      const clusterId = `${cat.id}_cluster_${clusterIndex + 1}`;
+      newNodes.push({
+        id: clusterId,
+        title: `${cat.title} (${clusterIndex + 1})`,
+        type: "cluster",
+      });
+      newLinks.push({ source: cat.id, target: clusterId });
+
+      children.slice(i, i + MAX_DEGREE).forEach((post) => {
+        newLinks.push({ source: clusterId, target: post.id });
+      });
+      clusterIndex += 1;
+    }
+  }
 });
 
-postNodes.forEach((post) => {
-  post.categories.forEach((cat) => {
-    links.push({ source: `cat_${cat}`, target: post.id });
-  });
-});
+const nodes = newNodes;
+const links = newLinks;
 ---
 
 <html lang="en">
@@ -50,7 +93,6 @@ postNodes.forEach((post) => {
         display: block;
         width: 100vw;
         height: 100vh;
-        background: #0d1117; /* dark background for contrast */
       }
     </style>
   </head>
@@ -69,7 +111,8 @@ postNodes.forEach((post) => {
   const canvas = document.getElementById("graph");
   const ctx = canvas.getContext("2d");
 
-  const categoryColor = "yellow";
+  const categoryColor = "magenta";
+  const clusterColor = "yellow";
   const postColor = "lightgreen";
 
   const categories = nodes
@@ -87,19 +130,18 @@ postNodes.forEach((post) => {
 
   const simulation = d3
     .forceSimulation(nodes)
-    .alphaTarget(0.12)
+    .alphaTarget(0.2)
     .force(
       "link",
       d3
         .forceLink(links)
         .id((d) => d.id)
-        .distance((d) =>
-          d.source.type === "root"
-            ? 200
-            : d.source.type === "category"
-              ? 120
-              : 80
-        )
+        .distance((d) => {
+          if (d.source.type === "root") return 200;
+          else if (d.source.type === "category") return 120;
+          else if (d.source.type === "cluster") return 90;
+          else return 70;
+        })
     )
     .force("charge", d3.forceManyBody().strength(-700))
     .force(
@@ -134,7 +176,7 @@ postNodes.forEach((post) => {
       const strength = 200 / dist;
       node.vx += (dx / dist) * strength;
       node.vy += (dy / dist) * strength;
-      if (node.type === "category") {
+      if (node.type === "category" || node.type === "cluster") {
         highlightedCategoryId = node.id;
       } else if (node.type === "post") {
         const parentLink = links.find(
@@ -173,7 +215,9 @@ postNodes.forEach((post) => {
           ? "#ffffff"
           : node.type === "category"
             ? categoryColor
-            : postColor;
+            : node.type === "cluster"
+              ? clusterColor
+              : postColor;
 
       if (node.type === "root") {
         ctx.font = "1.1rem sans-serif";
