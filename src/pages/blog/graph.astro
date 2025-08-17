@@ -244,5 +244,6 @@ const links = newLinks;
     render();
   }
   window.addEventListener("resize", resize);
+  window.addEventListener("popstate", () => window.location.reload());
   resize();
 </script>

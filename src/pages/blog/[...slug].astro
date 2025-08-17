@@ -17,6 +17,7 @@ const { Content } = await post.render();
 let count = 0;
 const wordCount = (post.body ?? "")
   .split(" ")
+  .filter((w) => w != "$$")
   .map((word) => word.replace(/\n/g, ""))
   .map((word) => {
     if (
@@ -26,9 +27,9 @@ const wordCount = (post.body ?? "")
     )
       count++;
     return word;
-  });
+  }).length;
 
-post.data.words = String(+wordCount.length.toString() + count);
+post.data.words = String(+wordCount.toString() + count);
 ---
 
 <BlogPost {...post.data}>
