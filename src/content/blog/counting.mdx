@@ -31,32 +31,34 @@ but contribute to the solution space (total number of overall possible events).
 
 ### Ways of sampling
 
-The number of ways we can sample (pick) $$ n $$ objects $$ k $$ times is simply $$ n^k $$. 
-Sampling with replacement can be thought of as filling $$ k $$ slots in a bag from a pool of $$ n $$
-objects (constant) where each slot gets $$ n $$ choices.
-When a dice is rolled twice, there are a total of $$ 36 $$ different outcomes. This is because for both 
-rolls, we have a total of $$ 6 $$ possible outcomes (die rolls are independent). The combined outcomes
-for each event are multiplied according to the fundamental principle. The number of functions possible 
+The number of ways we can sample (pick) $$ n $$ objects $$ k $$ times is simply $$ n^k $$ and
+is called sampling with replacement. It can be thought as filling $$ k $$ slots in a bag from
+a pool of $$ n $$ objects (constant) where each slot gets $$ n $$ choices.
+When a die is rolled twice, there are a total of $$ 36 $$ different outcomes. This is because for both
+rolls, we have $$ 6 $$ possible outcomes (die rolls are independent). The combined outcomes
+for each event are multiplied according to the fundamental principle. The number of functions possible
 from a domain of size $$ 5 $$
 and a co-domain of size $$ 6 $$ is again $$ 6^5 $$ since each element in the domain can be mapped 
 to 6 different elements in the co-domain and is then repeated 5 times.
 Another example of sampling with replacement would be to count the number of
 $$ 5 $$ character passwords that can be generated using the $$ 26 $$ letters of the english alphabet
-and $$ 10 $$ digits ($$ 0 $$ to $$ 9 $$), with no restrictions for repetition. Since there are
-$$ (26 + 10 = 36) $$ choices for each of the $$ 5 $$ places, is
+and $$ 10 $$ digits ($$ 0 $$ to $$ 9 $$), with no restrictions on repetition. Since there are
+$$ (26 + 10 = 36) $$ choices for each of the $$ 5 $$ spots, it
 leaves us with $$ 36^5 $$ possible passwords.
 
 The number of ways we can sample $$ n $$ objects without repetition would be $$ n \times (n - 1) \times (n - 2) ... \times 1 $$
 This is also the number of ways we can arrange (or permute) $$ n $$ objects linearly.
-This value is known as the factorial and is represented by $$ n! $$ This [video](https://www.youtube.com/watch?v=Mfk_L4Nx2ZI&pp=0gcJCdgAo7VqN5tD) has a cool explanation
-why $$ 0! $$ equals $$ 1 $$.
+This value is known as the factorial and is represented by $$ n! $$
+
+> [This video](https://www.youtube.com/watch?v=Mfk_L4Nx2ZI&pp=0gcJCdgAo7VqN5tD) has a cool explanation
+> why $$ 0! $$ equals $$ 1 $$.
 
 If our password was now put under a constraint where each character could only be chosen once,
 we would have $$ 36 $$ choices for the first character, $$ 35 $$ for the second and so on
-till $$ 32 $$ for the fifth and final character. So the total number of possible passwords
-would be $$ 36 \times 35 \times 34 \times 33 \times 32 $$. This result is equivalent to 
-$$ 36! $$ divided by $$ 31! $$ We call this a _permutation_,
-where the order of the objects matter (ordered sampling without replacement). Simply put, it is _the total number of possible arrangements_ of $$ n $$ objects taken $$ k $$ at a time, with
+till $$ 32 $$ for the fifth and final character. The total number of possible passwords
+would now be $$ 36 \times 35 \times 34 \times 33 \times 32 $$. This result is equivalent to 
+$$ 36! $$ divided by $$ 31! $$ We call this a _permutation_ or
+an arrangement of objects where the order matters (ordered sampling without replacement). Simply put, it is _the total number of possible arrangements_ of $$ n $$ objects taken $$ k $$ at a time, with
 $$ n! $$ being the case when all objects are to be arranged ($$ n $$ objects taken $$ n $$ at a time).
 
 $$
@@ -83,7 +85,7 @@ $$
 
 This is because **every set of size $$ k $$ elements chosen from $$ n $$ has $$ k! $$ permutations and all
 of those permutations make up $$ 1 $$ combination**.
-This doesn't seem very intuitive at first glance, so let's demonstrate this with an example.
+This doesn't seem very intuitive at first, so let's demonstrate this with an example.
 
 When looking for combinations, we are partitioning the objects into classes that contain groups
 (permutations) of the same k-element set. If we have the letters `abc`, we get $$ 6 $$ ($$ 3! $$)
@@ -100,7 +102,7 @@ the total number of permutations by $$ 3! $$ which gives us $$ \frac{6}{3!} = 1 
 Each class (of size $$ k $$) has $$ k! $$ different
 permutations. Thus, dividing the total number of permutations by $$ k! $$ gives us the number of classes
 (or combinations) since each class corresponds to one combination.
-This can also be considered as unordered sampling without replacement.
+This is also known as unordered sampling without replacement.
 
 ### Grouping
 
@@ -180,17 +182,17 @@ and another 6 ways to get a sum of 10.
 
 $$ 3+3+4\quad2+4+4\quad2+2+6\quad2+3+5\quad1+4+5\quad1+3+6 $$
 
-Even though there are 6 possible ways for getting both sums, a sum of 10 is more likely than a
+Even though there are only 6 possible ways for getting both sums, a sum of 10 is more likely than a
 sum of 9 because the presence of identical elements in an event reduces
 the total number of permutations.
 
-In both cases, there are 3 events where all
-the numbers are unique. This gives a total of $$ 3! \times 3 = 18 $$ possible arrangements for both.
+In both sums, there are 3 events where all
+the numbers are unique. This gives a total of $$ 3! \times 3 = 18 $$ possible arrangements for each.
 In the rest of the three cases,
 the sum 9 has two events where two numbers are the same
 $$ (2,2,5/1,4,4) $$ and one event where all three numbers are the same $$ (3,3,3) $$. 
 This gives a combined total of $$ 18 + \frac{3!}{2!} \times 2 + \frac{3!}{3!} = 25 $$
-possible arrangements. For the sum of 10, all the remaining three events 
+possible arrangements. For a sum of 10, all the remaining three events 
 have two similar numbers (3,3,4/2,4,4/2,2,6). This gives a combined total of $$ 18 + \frac{3}{2!} \times 3 = 27 $$ possible arrangements.
 The presence of $$ (3,3,3) $$ in 9 reduces the permutation space and makes all the difference. Since there
 is only one way it can be arranged, the probability of getting 3 in all three die rolls is three
@@ -202,9 +204,9 @@ number of possible permutations, the higher the probability.
 
 Let's pose a question. What is the number of subsets possible from a set of $$ n $$ distinct objects?
 We can think of it as having the binary choice of either choosing or discarding an object
-from our set for each of our slots. Since there are $$ 2 $$ options and $$ n $$ objects,
+from our set for each of our slots. Since there are $$ 2 $$ options and $$ n $$ objects (or slots),
 it gives us a total of $$ 2^n $$ possible subsets including the null subset where no objects
-are chosen. If you've used bitmasking in programming, this should be something you're already familiar with.
+are chosen. If you have used bitmasking in digital electronics or programming, this should be something you're already familiar with.
 
 $$
 
@@ -227,7 +229,7 @@ selection is $$ (5 + 1)(3 + 1) = 24. $$
 
 ### The Inclusion-Exclusion Principle
 
-The Inclusion-Exclusion principle is an extremely powerful technique that allows us to find the union
+This is an extremely powerful technique that allows us to find the union
 of sets by avoiding double counting. Let's understand what this means. Consider two sets $$A$$ and $$ B $$
 that represent the number of students who like the subjects mathematics and chemistry respectively. Say set
 $$ A $$ has $$ 7 $$ students and set $$ B $$ has $$ 5 $$.
@@ -248,8 +250,10 @@ n(A \cup B) = n(A) + n(B) - n(A \cap B)
 $$
 
 This is the very idea behind inclusion-exclusion. We include and exclude combinations of sets
-to take care of the overlap during counting. If we were to extend this idea to $$ 3 $$ sets,
-we would first add all the single sets, then subtract all the combinations of the intersection of
+to take care of the overlap during counting.
+
+If we were to extend this idea to $$ 3 $$ sets, we would first add all the single sets,
+then subtract all the combinations of the intersection of
 two sets and finally add all the combinations of the intersections of three sets (of which
 only $$ 1 $$ exists). This is because in subtracting $$ A \cap B $$ and $$ B \cap C $$, we double 
 subtract the elements in set $$ B $$. The same can be said for $$ A $$ while subtracting $$ A \cap B $$
@@ -268,9 +272,9 @@ n(A \cup B \cup C \cup D) = n(A) + n(B) + n(C) + n(D) - n(A \cap B) - n(A \cap C
 
 $$
 
-A great example of applying our inclusion-exclusion knowledge can be found
+A great example of applying this knowledge can be found
 when we're asked to count the number of onto functions
-(functions where range = co-domain, in other words every element in the co-domain must be
+(functions whose range $$ = $$ co-domain, in other words every element in the co-domain must be
 mapped to an element in the domain) possible from a domain of 5 elements and a co-domain of 6. To begin with,
 we count the total number of functions possible from these two sets, which is $$ 6^5 $$ (as discussed
 [earlier](#ways-of-sampling)). We now proceed to subtract the functions that are not onto.
@@ -302,15 +306,18 @@ $$
 $$
 
 We add and subtract all of these terms alternatively from the total number of possible functions
-to arrive at the right answer.
+to get the right answer.
 
 #### Derangement
 
 This is a perfect time to talk about derangement, which is the peculiar arrangement
-where no element go to their original slot. Let's consider a
-set $$ A_i $$ as the permutation where the i-th element is fixed in its original position.
-Taking an example where we apply derangement to $$ 4 $$ objects,
-we first calculate sum of the single sets where one object is fixed. There are
+where no element is at their original slot. If we have the set $$ \{1, 2, 3, 4, 5\} $$,
+then $$ \{2, 1, 4, 5, 3\} $$ would be an example of a derangement whereas $$ \{2, 1, 3, 5, 4\} $$
+is not. Let's consider a set $$ A_i $$ as the permutation where the i-th element is 
+fixed in its original position.
+Taking an example where we apply derangement to $$ 4 $$ objects, we start by calculating the
+total number of possible arrangements ($$ 4! = 24 $$) and apply inclusion-exclusion to this value.
+We first calculate the sum of the single sets where one object is fixed. There are
 $$ \binom{4}{1} $$ ways to choose an item and $$ 3! $$ ways to arrange the rest. So we get,
 
 $$ \sum{}A_i = \binom{4}{1} \times 3! = 24 $$
@@ -331,6 +338,9 @@ $$ \sum{}A_i - \sum{}|A_i \cap A_j| + \sum{}|A_i \cap A_j \cap A_k| = 12 + \bino
 And finally, subtract the case where all four elements are at their original slot.
 
 $$ \sum{}A_i - \sum{}|A_i \cap A_j| + \sum{}|A_i \cap A_j \cap A_k| - \sum{}|A_i \cap A_j \cap A_k \cap A_l| = 16 - \binom{4}{4} \times 0! = 15 $$
+
+We subtract these $$ 15 $$ invalid permutations from $$ 24 $$ to get 9 as the answer.
+(Same as alternate add/subtract from total possible arrangements)
 
 Adding and subtracting resolves the double-counting and over-correcting introduced by the previous steps
 respectively.
@@ -386,13 +396,13 @@ is given by
 
 $$
 
-\binom{n + k - 1}{n}
+\binom{n + k - 1}{k}
 
 
 $$
 
 The intuition behind this is deceptively simple. Let's imagine the situation where we need to distribute
-$$ 5 $$ chocolates ($$ n = 5 $$) to $$ 3 $$ ($$ k = 3 $$) kids. One possible solution could be:
+$$ 5 $$ chocolates ($$ k = 5 $$) to $$ 3 $$ ($$ n = 3 $$) kids. One possible solution could be:
 
 $$
 
@@ -401,15 +411,17 @@ a_1 \quad a_2 \quad | \quad a_3 \quad | \quad a_4 \quad a_5
 
 $$
 
-For each such solution, we always place $$ n $$ chocolates and $$ k - 1 $$ bars for the partitions, which gives us
-a total of $$ n + k - 1 $$ positions. For this, we only need to choose $$ k - 1 $$ positions for the bars and the rest
+For each such solution, we always place $$ k $$ chocolates and $$ n - 1 $$ bars to partition them into
+$$ n $$ bins (children), which gives us
+a total of $$ n + k - 1 $$ positions. We only need to choose $$ n - 1 $$ positions for the bars and the rest
 of the positions will be assigned to the chocolates (items). This gives us
-$$ \binom{n + k - 1}{k - 1} = \binom{n + k - 1}{n} $$. It is equivalent to arranging 
-(or grouping) $$ n + k - 1 $$ items using the multinomial coefficient
-where $$ n $$ items are of one kind and $$ k - 1 $$ are of another.
+$$ \binom{n + k - 1}{n - 1} = \binom{n + k - 1}{k} $$.
+
+This method is equivalent to arranging (or grouping) $$ n + k - 1 $$ items using the multinomial coefficient
+where $$ k $$ items are of one kind and $$ n - 1 $$ are of another.
 
 $$
-\frac{(n + k - 1)!}{(k - 1)! \times n!}
+\frac{(n + k - 1)!}{(n - 1)! \times k!}
 $$
 
 #### Adding constraints
@@ -425,9 +437,9 @@ x_1 + x_2 + x_3 = 10; \quad x_1 \ge 1, x_2 \ge 2
 $$
 
 this becomes a problem where $$ 10 $$ chocolates must be distributed to $$ 3 $$ kids
-where the first kid must be given at least $$ 1 $$ chocolate and the second kid must have at least $$ 2 $$
-(Also, how many ways can we get a sum of 10
-when 3 dice are rolled). To solve this, we need to substitute
+where the first kid must be given at least $$ 1 $$ chocolate and the second kid must have
+at least $$ 2 $$ (Same as the number of ways we can get a sum of $$ 10 $$
+when $$ 3 $$ dice are rolled). To solve this, we need to substitute
 the constraint variables with $$ x_1' $$ and $$ x_2' $$ where $$ x_1' = x_1 - 1 $$ and
 $$ x_2' = x_2 - 2 $$. This is because the least possible values of $$ x_1 $$ and $$ x_2 $$ must
 be 1 and 2. So the equation now becomes:
@@ -439,10 +451,10 @@ x_1' + x_2' + x_3' = 10 - (1 + 2); \quad x_3' = x_3 \\
 
 $$
 
-If the constraint on $$ x_1 $$ was $$ x_1 \gt 1 $$, then $$ x_1' = x_1 - 2 $$ since 2 is the smallest possible
-value $$ x_1 $$ can take.
+If the constraint on $$ x_1 $$ was $$ x_1 \gt 1 $$, then $$ x_1' = x_1 - 2 $$ since $$ 2 $$
+is the smallest possible value $$ x_1 $$ can take.
 
-Let's consider the equation with the following constraints:
+Let's now consider the equation with the following constraints:
 
 $$
 
@@ -459,7 +471,7 @@ Let's start by taking care of the lower bounds of each variable and shift our va
 
 $$
 
-x_1' - 2 + x_2' - 0 + x_3' - 1 + x_4' - 0 = 10 \\
+x_1' + 2 + x_2' + 0 + x_3' + 1 + x_4' + 0 = 12 \\
 
 \quad \\
 
@@ -489,7 +501,7 @@ the following values
 
 $$
 
-x_1 > 3 + 1; \quad x_2 > 4 + 1; \quad x_3 > 2 + 1; \quad x_4 > 6 + 1
+x_1 \ge 3 + 1; \quad x_2 \ge 4 + 1; \quad x_3 \ge 2 + 1; \quad x_4 \ge 6 + 1
 
 
 $$
@@ -528,8 +540,9 @@ Applying alternate summation, we get $$ 220 - 185 + 15 = 50 $$ solutions.
 
 ### Identical Slots
 
-The case of identical slots is rather cumbersome. Let's take the scenario where we have 6 distinct books
-that we want to place into 4 identical boxes so that each box can get either 0 or more books.
+The case of identical slots is rather cumbersome. Let's take the scenario where we have
+$$ 6 $$ distinct books
+that we want to place into $$ 4 $$ identical boxes so that each box can get either $$ 0 $$ or more books.
 If the boxes were distinct, we'd simply say that there are
 $$ 4^6 $$ ways of distributing and be done with it. Putting a book $$ T_1 $$ into box
 $$ A $$ and book $$ T_2 $$ into box $$ B $$ is not the same as the opposite
@@ -605,15 +618,15 @@ and concrete. But what happens when we arrange them in a circle? The
 start or end of such an arrangement reduces to perspective. So what really matters
 is the relative order of the objects since a rotation of the circle would not result in a new arrangement.
 In order to break this symmetry, we first place 1 element at 1 spot (1 way) and then the rest $$ n - 1 $$
-elements in $$ (n - 1)! $$ ways taking the first item as reference.
+elements in $$ (n - 1)! $$ ways by taking the first item as reference.
 Thus, the number of circular permutations of $$ n $$ objects become $$ (n - 1)! $$
 
-An interesting case of circular arrangements arise from the arrangement of beads in a necklace. Apart
+An interesting case of circular arrangements arise from the arrangement of beads on a necklace. Apart
 from the usual rotational symmetry,
 the reflectional symmetry is also considered where the necklace is flipped
-along the y-axis. This means that half of the unique arrangements that we get from a normal
+along an axis. This means that half of the unique arrangements that we get from a normal
 circular arrangement are not distinct anymore. Due to this, we divide the total number of arrangements
-by 2!
+by $$ 2 $$.
 
 #### Burnside's Lemma
 
@@ -630,24 +643,25 @@ the number of rotations/flips performed on the necklace. Do not worry about the 
 as we will clear it all up with a detailed example.
 
 A `fix` is simply an arrangement that stays unchanged (fixed) under a transformation
-(rotation/reflection). Let's take the example of a necklace with 4 beads and 2 colours (represented by 'A' and 'B')
-to really understand this.
+(rotation/reflection). Let's take the example of a necklace with `4` beads and `2` colours
+(represented by `A` and `B`) to really understand this.
 
 The number of ways we can colour this necklace is $$ 2^4 $$.
 
 `AAAA`, `AAAB`, `AABA`, `AABB`, `ABAA`, `ABAB`, `ABBA`, `ABBB`,
 `BAAA`, `BAAB`, `BABA`, `BABB`, `BBAA`, `BBAB`, `BBBA`, `BBBB`
 
-Now, the total number of transformations we can perform on this necklace is 8
+Now, the total number of transformations we can perform on this necklace is $$ 8 $$
 (Rotations: $$ 0\degree, 90\degree, 180\degree, 270\degree $$) +
 (Reflections: $$ 2 $$ through opposite beads, $$ 2 $$ through opposite gaps).
 
 If we consider the rotation transformation of $$ 90 \degree $$, there are only two colourings that
 do not change. (`AAAA` and `BBBB`). Thus, the fix for this transformation (fix[$$ 90 \degree $$]) is 
 $$ 2 $$. Similarly, if we take the $$ 180 \degree $$ transformation,
-the colourings that stay the same are `AAAA`, `ABAB`, `BABA`, `BBBB` and its fix is $$ 4 $$. If we do this
-for all transformations and divide the sum of the all fixes by the number of transformations ($$ 8 $$),
-we get the number of orbitals or in other words, the number of distinct colourings that are asymmetric.
+the colourings that stay the same are `AAAA`, `ABAB`, `BABA`, `BBBB` and its fix is $$ 4 $$. If we repeat
+this process for all transformations and divide the sum of all the fixes by the number of
+transformations, we get the number of orbits or in other words, the number of
+distinct colourings that are completely asymmetric with each other.
 
 $$
 
@@ -657,7 +671,7 @@ O = \frac{\sum{}{fix(g)}}{|G|_{g \in G}}
 $$
 
 This division (or averaging) accounts for the double counting that is present across all transformations.
-(e.g. $$ 90\degree $$ and $$ 270\degree $$)
+(e.g. $$ 90\degree $$ and $$ 270\degree $$ both have the same 4 arrangements)
 
 This lemma finds its use in unlabelled graph enumeration problems and even in
 chemistry to count isomers of a compound.
