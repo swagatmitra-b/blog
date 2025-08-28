@@ -1,6 +1,7 @@
 html {
   background-color: #02020b;
-  font-family: "Noto Sans JP";
+ /* font-family: "Noto Sans JP"; */
+  font-family: "Merriweather";
   font-size: 0.9rem;
   line-height: 2rem;
 }

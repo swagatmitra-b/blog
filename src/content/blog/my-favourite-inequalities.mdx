@@ -6,17 +6,19 @@ tags: [Mathematics]
 words: ""
 ---
 
-Imbalances are ubiquitous in nature. Their very existence is a macrocosm of bizarre phenomena 
+Imbalances are ubiquitous in nature. Their very existence is a macrocosm of bizarre phenomena
 that react in wild and seemingly unpredictable ways.
-But mathematicians, the smartest and inquisitive of all humans, devised a way to reify these imbalances into a formal system
+But mathematicians devised a way to reify these imbalances into a formal system
 that always hold true. Several abstract and difficult problems have been reduced to
 trivial solutions through a series of logical consequences that arise from inequalities. And much to the irony,
 we need these inequalities to prove equalities of all kinds.
 
-Please bear in mind that over the course of this article, I will not go over the proofs of these inequalities
-to avoid making this a verbose mathematical discourse! I plan on keeping this extremely
-comprehensible and intuitive with a greater on focus on their practicality, but I certainly do not mind
-expanding on examples to help clear the picture for you.
+Over the course of this article, we are going to discuss some of the most important inequalities
+in mathematics. Please bear in mind that I will not go over their proofs to avoid making
+this a verbose mathematical discourse! As with all my articles,
+I plan on keeping this extremely comprehensible and intuitive with a greater on focus on
+their practicality. But I certainly do not mind expanding on examples to help clear the picture
+for you.
 
 ## The Mean Triplet
 
@@ -36,7 +38,7 @@ $$
 
 The AM-GM relationship is often used to maximize or minimize functions. The AM is simple and applies equal
 weight to every value when calculating the mean. The Geometric mean, on the other hand, is used to capture
-the averaging of compounding effects. 
+the averaging of compounding effects.
 
 To illustrate this, let us consider the annual returns of an investment
 for $$ 3 $$ years to be $$ 5\% $$, $$ 8\% $$, and $$ 6\% $$ respectively. The formula for the average growth
@@ -182,7 +184,7 @@ $$
 
 where $$ \|\vec{v}\| $$ and $$ \|\vec{v}\| $$ are the norms of the vectors
 and $$ | \vec{u} \cdot \vec{u} | $$ is the absolute value of their dot product,
-with equality holding iff the vectors are linearly dependent 
+with equality holding iff the vectors are linearly dependent
 or one of the vectors is a null vector. A set of vectors are linearly dependent when
 at least one of the vectors can be written as a linear combination of the other vectors
 (There exists a scalar $$ a $$ which satisfies $$ \vec{v} = a\vec{u} $$).
@@ -197,12 +199,12 @@ $$
 
 - \|\vec{v}\| \|\vec{u}\| \leq \vec{v} \cdot \vec{u} \leq \|\vec{v}\| \|\vec{u}\|
 
+
 $$
 
 For the sake of simplicity, I am considering the vectors to be in real space $$ \mathbb{R}^n $$. But the
-inequality can be generalized, 
-and holds true in non-Euclidean vector spaces with complex forms. The dot product is just a special
-case of the inner product in $$ \mathbb{R}^n $$ space.
+inequality can be generalized and holds true in non-Euclidean vector spaces with complex forms as 
+well. The dot product is just a special case of the inner product in $$ \mathbb{R}^n $$ space.
 
 The applications of Cauchy-Schwarz can be seen when we take the cosine of the angle between two vectors
 
@@ -222,7 +224,8 @@ Var(X)Var(Y) \geq Cov(X, Y)^2
 
 $$
 
-where $$ X $$ and $$ Y $$ are two random variables $$ Var $$ and $$ Cov $$ are their variance and covariance.
+where $$ X $$ and $$ Y $$ are two random variables $$ Var $$ and $$ Cov $$ are their variance and
+covariance respectively.
 It also gives rise to an inequality known as Titu's Lemma, which is of the form
 
 $$
@@ -281,25 +284,26 @@ $$
 
 In both the cases, equality is achieved when the sequences are constant. The impact of Chebyshev's Inequality
 is widely felt in probability theory. It provides an upper bound on the probability that a random variable
-(say $$ X $$) deviates from its mean by more than a definite amount of standard deviations. 
+(say $$ X $$) deviates from its mean by more than a definite amount of standard deviations.
 
 $$
 
 P(|X - \mu| \geq n\sigma) \leq \frac{1}{n^2}
 
+
 $$
 
-where $$ \mu $$ is the mean, $$ \sigma $$ is the SD and $$ n $$ is the number of SD. 
+where $$ \mu $$ is the mean, $$ \sigma $$ is the SD and $$ n $$ is the number of SD.
 This bound is not definitive but only a
-conservative estimate which works well for most cases, regardless of the type of distribution. 
-Due to this, it is popular in many statistical 
-inferences. Let's take an example. 
+conservative estimate which works well for most cases, regardless of the type of distribution.
+Due to this, it is popular in many statistical
+inferences. Let's take an example.
 
 The mean ($$ \mu $$) of the subject score for a group of students is $$ 60 $$ and the standard deviation is 
 $$ 15 $$. If we randomly pick a student, what is the probability that the student has a score which is greater
-than $$ 30 $$ but less than $$ 90 $$? 
+than $$ 30 $$ but less than $$ 90 $$?
 
-There are other ways to arrive at the right answer, but we'll stick to using Chebyshev. Let's first calculate the $$ n $$ (also the z-score), which gives us the 
+There are other ways to arrive at the right answer, but we'll stick to using Chebyshev. Let's first calculate the $$ n $$ (also the z-score), which gives us the
 number of standard deviations above or below the mean. In this case, $$ \frac{60 - 30}{15} = \frac{90 - 60}{15} = 2 $$.
 If the values of n were not equal, we would settle with the greater z-score (we are only concerned about the magnitude and not sign).
 We now need $$ P(|X - \mu| < 2) $$, which is equal to  $$ 1 - P(|X - \mu| \geq 2) $$. Therefore
@@ -315,9 +319,10 @@ $$
 
 P(|X - \mu| < 2) \geq 1 - \frac{1}{4} = 1 - 0.25 = 0.75
 
+
 $$
 
-This shows that there is at least a $$ 75\% $$ chance that a randomly chosen student has a score between $$ 30 $$ and 
+This shows that there is at least a $$ 75\% $$ chance that a randomly chosen student has a score between $$ 30 $$ and
 $$ 90 $$.
 
 ## Jensen's Inequality
@@ -325,7 +330,7 @@ $$ 90 $$.
 This is an extremely powerful inequality (and probably my favourite of all).
 To understand Jensen's inequality, let us first explore convex and concave functions.
 
-A function is convex (also concave up) if the second derivative, $$ f''(x) \geq 0 $$ and concave (also concave down) 
+A function is convex (also concave up) if the second derivative, $$ f''(x) \geq 0 $$ and concave (also concave down)
 if $$ f''(x) \leq 0 $$ for all $$ x \in \mathbb{R} $$. If $$ f''(x) = 0 $$, the point is an inflection point where
 the function's concavity (or convexity) changes.
 Further, the sign of the first derivative tells us whether the function is increasing or decreasing in the
@@ -333,7 +338,7 @@ said interval.
 
 ![Concavity](/concavity.webp)
 
-_Now, the inequality states that if $$ f(x) $$ is convex in the interval $$ [a, b] $$, then_ 
+_Now, the inequality states that if $$ f(x) $$ is convex in the interval $$ [a, b] $$, then_
 
 $$
 
@@ -351,7 +356,7 @@ of $$ log(x) $$ against the x-axis.
 
 The first derivative of this function is $$ f'(x) = -\frac{1}{x} $$, and its second derivative 
 $$ f''(x) = \frac{1}{x^2} $$. Since $$ f''(x) > 0 $$ for all $$ x \in \mathbb{R} - \{0\} $$,
-$$ f(x) $$ is concave up for $$ x > 0 $$. Thus, by using the inequality, 
+$$ f(x) $$ is concave up for $$ x > 0 $$. Thus, by using the inequality,
 
 $$
 
@@ -364,10 +369,11 @@ $$
 
 log(\frac{x_1 + x_2 + \dots + x_n}{n}) \geq \frac{log(x_1) + log(x_2) + \dots + log(x_n)}{n}
 
+
 $$
 
-When we multiply both sides of an inequality by $$ -1 $$, the inequality reverses. 
-If you remember your properties of logarithm, you'll likely remember these two rules.
+When we multiply both sides of an inequality by $$ -1 $$, the inequality sign reverses.
+If you remember the properties of logarithm, you will likely remember these properties.
 
 $$
 
@@ -384,9 +390,9 @@ log_a(b) = \frac{log_x{b}}{log_x{a}}
 $$
 
 Our goal is to raise the numerator to a fraction $$ \frac{1}{n} $$, since we need to obtain the 
-Geometric Mean, which is a surd.
-If we do this, we have to compensate by raising the power of the base to the same fraction, by following
-rule 1. Similarly, for the denominator, we know $$ log_{e^1/n}(e) = n \times log_e(e) = n $$ as $$ log(e) = 1 $$.
+Geometric Mean, which is a surd. If we do this, we have to compensate by raising the
+power of the base to the same fraction, by following rule 1. Similarly,
+for the denominator, we know $$ \log_{e^1/n}(e) = n \times log_e(e) = n $$ as $$ log(e) = 1 $$.
 
 $$
 
@@ -431,34 +437,26 @@ _combination of a and b $$ (ax + by) $$ is $$ mn - m - n $$._ Let's illustrate t
 Consider a game that awards $$ 7 $$ points and $$ 11 $$ points to a player on the basis of various scenarios. Since, $$ 7 $$
 and 11 are co-prime, we can apply the McNugget theorem and find that $$ 59 $$, which is $$(7 \times 11 - 7 - 11) $$,
 is the maximum amount of points that cannot be scored by any player. Thus, scoring $$ 59 $$ points is an impossibility
-for any player playing the game. After $$ 59 $$ points, every point is possible as they can be represented as 
-a linear combination of $$ 7 $$ and $$ 11 $$. 
+for any player playing the game. After $$ 59 $$, every point can be
+represented as a linear combination of $$ 7 $$ and $$ 11 $$.
 
-$$
-  60 = 7 \times 7 + 11 \times 1
-$$
-$$
-  61 = 7 \times 4 + 11 \times 3
-$$
-$$
-  62 = 7 \times 1 + 11 \times 5
-$$
+$$ 60 = 7 \times 7 + 11 \times 1 $$
 
-Of course, smaller impossible scores like 10, 20, etc. exist, but are of trivial concern. 
+$$ 61 = 7 \times 4 + 11 \times 3 $$
+
+$$ 62 = 7 \times 1 + 11 \times 5 $$
 
 You can read the story behind it's unique name [here](https://artofproblemsolving.com/wiki/index.php/Chicken_McNugget_Theorem) :)
-
 
 ## Conclusion
 
 Mathematics was my top subject throughout school. I probably owe it to my dad, who has a masters in Pure Mathematics,
-for impressing me early in my childhood.
-Although I barely participated in rigorous
-maths competitions and cannot boast of any prodigious success, my fascination for the discipline has no upper-bounds. 
+for impressing me early in my childhood. Although I barely participated in any rigorous maths
+competitions and cannot boast of any prodigious success, my fascination for the discipline has no upper-bounds.
 You can try the inequalities section in [Art of Problem Solving](https://artofproblemsolving.com/wiki/index.php/Inequality)
-for an in-depth reference or tackle the olympiad problems if you feel up for a challenge. 
+for an in-depth reference or tackle the olympiad problems if you feel up for a challenge.
 
-Always remember to embrace, not suppress the imbalances that wrestle inside you. They all exist for a reason. 
+Always remember to embrace, not suppress the imbalances that wrestle inside you. They all exist for a reason.
 
 <div class="flex w-full justify-end text-[#c4c1b9] italic mt-28">
   <p class="w-1/2">
