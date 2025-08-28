@@ -297,7 +297,7 @@ but second commit. Whereas, `--hard HEAD~2` will reset the workspace to that com
 
 ```
 git reset --soft <HEAD~n> #n - number of previous commits to switch back to
-git reset --hard <commit-hash> 
+git reset --hard <commit-hash>
 ```
 
 #### Git Revert
@@ -346,12 +346,24 @@ flexibility it provides regarding modification of files and the preservation of 
 
 #### Git Restore
 
-Restore restores the state of a file to the state of its last commit. You can also unstage a file using the flag
-`--staged`.
+Restore restores the state of a file to the state of its last commit.
 
 ```
-git restore <file>
+git restore <file-path>
 ```
+
+For restoring the state
+of any arbitrary previous commit, we can do
+
+```
+git restore --source=<commit> <file-path>
+or
+git checkout <commit> -- <file-path>
+
+```
+
+You can also unstage a file using the flag
+`--staged`.
 
 #### Undoing Rebase
 

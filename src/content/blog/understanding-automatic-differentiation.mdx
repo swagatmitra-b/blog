@@ -95,7 +95,7 @@ of this terrain (a global minima). There have been several algorithms that attem
 or "uncover" these parameters but the most practical and universally used algorithm in today's era
 is a technique called Gradient Descent.
 Starting at any point on the surface (taken care of by proper initialization methods),
-we interatively calculate the slope of the loss function or formally the gradient,
+we iteratively calculate the slope of the loss function or formally the gradient,
 which is the vector of partial derivatives with respect to each weight and bias
 on that point. This involves calculating the gradient of the loss
 $$ l_i $$ representing the loss for the $$i$$-th sample $$ (f(x_i, \phi) - y_i)^2 $$
@@ -215,7 +215,7 @@ value of $$ h $$, the truncation error decreases but in turn, increases the roun
 
 The rounding error arises from the infamous inability of computers to handle floating point arithmetic.
 As we shrink $$ h $$ to an extremely small value, subtracting $$ f(x + h) $$ and $$ f(x) $$,
-which almost become indentical values often results in computer programs (typically handle
+which almost become identical values often results in computer programs (typically handle
 double-precision floating point numbers but is dependent on compiler and
 machine specifications) rounding off to zero and a complete loss of information. The smaller the value
 of $$ h $$, the higher the numerical instability.
@@ -225,7 +225,7 @@ with $$ h $$ leads us to a trade-off where we must find the
 optimum value of $$ h $$ to get the most out of the derivatives.
 
 Additionally, for a function $$ f: \reals^m \to \reals^n $$, the time complexity to compute the gradients 
-is roughly $$ O(m \times n) $$, which is quite inefficent
+is roughly $$ O(m \times n) $$, which is quite inefficient
 if we take into account that neural networks can contain billions of parameters and would
 blow up the computation time massively. And all of these
 inaccuracies exacerbate in the case of higher (2nd or more) derivatives.
@@ -738,7 +738,7 @@ several iterations over several epochs on the dataset.
 
 In the training loop, we compute the loss of the output of the forward pass (type Node) and clear the gradients
 that were accumulated in the previous iteration before starting the backward pass.
-The `backward` fuction performs a [toposort](https://en.wikipedia.org/wiki/Topological_sorting) starting from the output to build the
+The `backward` function performs a [toposort](https://en.wikipedia.org/wiki/Topological_sorting) starting from the output to build the
 DAG and runs the `back` function for all nodes sequentially.
 
 ```
