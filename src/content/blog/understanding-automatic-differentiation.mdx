@@ -647,11 +647,15 @@ $$
 
 $$
 
-This product is a familiar sounding quantity known as the Vector-Jacobian-Product ($$ 1 \times m $$).
+This product is a familiar sounding quantity known as the Vector-Jacobian-Product ($$ 1 \times n $$).
 Similar to the JVP, reverse mode AD allows us to compute the VJP without the need of a full Jacobian
 by propagating the adjoints backwards through the graph. A single reverse pass gives us the
 gradients of the loss function with respect to the parameters needed for our gradient descent.
 Forward mode AD would require one JVP _per parameter_ to do the same.
+
+> A JVP is the adjoint of the VJP. So in principle, we can get the forward pass (JVP) by computing
+> [two backward passes](https://github.com/renmengye/tensorflow-forward-ad/issues/2). It is
+> like computing the adjoint of the adjoint. 
 
 $$
 
@@ -770,6 +774,7 @@ Here are a few useful resources that I read to educate myself.
 
 - [What's Automatic Differentiation?](https://huggingface.co/blog/andmholm/what-is-automatic-differentiation)
 - [Automatic Differentiation in Machine Learning - A Survey](https://www.jmlr.org/papers/volume18/17-468/17-468.pdf)
+- [Lecture 6: Automatic Differentiation - Roger Grosse](https://www.cs.toronto.edu/~rgrosse/courses/csc421_2019/readings/L06%20Automatic%20Differentiation.pdf)
 - [A Gentle Introduction to torch.autograd](https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html)
 
 As always, thanks for reading!
