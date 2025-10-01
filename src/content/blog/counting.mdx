@@ -342,7 +342,7 @@ $$ \sum{}A_i - \sum{}|A_i \cap A_j| + \sum{}|A_i \cap A_j \cap A_k| - \sum{}|A_i
 We subtract these $$ 15 $$ invalid permutations from $$ 24 $$ to get $$ 9 $$ as the answer.
 (Same as alternate add/subtract from total possible arrangements)
 
-Adding and subtracting resolves the double-counting and over-correcting introduced by the previous steps
+Adding and subtracting resolves the over-correcting and double-counting introduced by the previous steps
 respectively.
 
 ### Integral solutions
@@ -437,12 +437,12 @@ x_1 + x_2 + x_3 = 10; \quad x_1 \ge 1, x_2 \ge 2
 $$
 
 this becomes a problem where $$ 10 $$ chocolates must be distributed to $$ 3 $$ kids
-where the first kid must be given at least $$ 1 $$ chocolate and the second kid must have
+with the first kid receiving at least $$ 1 $$ chocolate and the second kid receiving
 at least $$ 2 $$ (Same as the number of ways we can get a sum of $$ 10 $$
 when $$ 3 $$ dice are rolled). To solve this, we need to substitute
 the constraint variables with $$ x_1' $$ and $$ x_2' $$ where $$ x_1' = x_1 - 1 $$ and
 $$ x_2' = x_2 - 2 $$. This is because the least possible values of $$ x_1 $$ and $$ x_2 $$ must
-be 1 and 2. So the equation now becomes:
+be $$ 1 $$ and $$ 2 $$. So the equation now becomes:
 
 $$
 
