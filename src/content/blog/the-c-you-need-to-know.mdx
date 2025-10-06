@@ -165,14 +165,14 @@ Memory frames are sometimes swapped out to the physical disk instead of the RAM,
 attempts to access it. The OS then either loads the frame back to the RAM or kills the process to resolve it. Some addresses are not mapped to any
 physical frame at all (often due to faulty code), which results in a *segfault* when trying to access this forbidden memory.  
 
-To manage memory in C through code without writing ugly addresses or registers names like we do in assembly, we use pointers. Pointers are essentially 
+To manage memory in C through code without having to write ugly addresses like we do in assembly, we use pointers. Pointers are essentially 
 variables that store the memory address of another variable. When a pointer is dereferenced, we access the value stored by the variable 
 whose memory location is stored by the pointer. The OS looks at the virtual address space and asks the MMU to return the value present 
 in the corresponding address frame from the RAM. 
 
 Throughout the rest of the article, we discuss how to manage memory by using pointers correctly and their caveats. 
 
-> There exists a special segment of memory known as the static memory. It is separate from the stack and heap and is used to store
+> There exists a special [segment](https://www.youtube.com/watch?v=2htbIR2QpaM) of memory known as the static memory. It is separate from the stack and heap and is used to store
 variables whose lifetime extends till the end of the program. We will talk more about this when we discuss lifetimes later in the article. 
 
 ### Value and Reference
