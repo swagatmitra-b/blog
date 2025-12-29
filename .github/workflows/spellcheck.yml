@@ -22,4 +22,4 @@ jobs:
         run: pip install codespell
 
       - name: Run codespell
-        run: codespell --ignore-words-list=fro,sais,discreet,covert,commend --skip="*.html, *.astro, *.ts, *js, *.json, apprendre-les-langues.mdx"
+        run: codespell --ignore-words-list=fro,sais,discreet,covert,commend --skip="*.html, *.astro, *.ts, *js, *.json, apprendre-les-langues.mdx, le-mois-de-noel.mdx"
