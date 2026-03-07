@@ -72,8 +72,8 @@ Rebasing is deceptively simple to understand, but has a greater proclivity to ca
 As I briefly mentioned at the start of this section, Rebase essentially re-writes history. Rebasing our feature
 branch changes its base commit to the latest commit on the parent branch, thus updating
 it with fresh commits from its parent branch and creating a linear timeline that's easy to understand.
-The latter is one of the biggest benefits of rebasing. Merging multiple branches without rebasing can create
-a messy and convoluted commit graph.
+The latter is one of the biggest benefits of rebasing. Merging multiple branches (through merge commits) can
+create a messy and convoluted commit graph.
 
 ```
 (on: feat)
@@ -125,6 +125,12 @@ the `--abort` flag or `--skip` to skip a commit if you find yourself in a tangle
 A crucial feature about rebasing that is often overlooked is that commit hashes change
 when a branch is rebased. This is because rebasing, like we discussed, re-writes history. Since the base commit
 changes, it also influences the change in the hashes of individual commits.
+
+Often, the easiest way to update our private feature branch with the latest commits 
+of the main branch is to rebase it using the powers of git pull (`git pull --rebase origin main`). This 
+will not create a merge commit as it normally would without the `--rebase` flag, but instead fetch 
+the latest commits from the main branch and apply our commits on top of it. I find myself 
+using this command extensively.
 
 > We should refrain from rebasing branches whose commits have already been pushed remotely. As commit
 > hashes change when rebasing, it causes issues for other developers you're collaborating with.
@@ -283,6 +289,8 @@ to previous commits.
 > the current workspace. The `git diff` command is my favourite way to compare the changes in the current
 > workspace against the previous commit
 > state.
+
+{/* #### Understanding Git Reflog */}
 
 #### Git Reset
 
